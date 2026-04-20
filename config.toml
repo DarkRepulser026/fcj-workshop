@@ -14,7 +14,7 @@ home = [ "HTML", "RSS", "JSON"]
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "workshop"
   # Git hub repo link
-  editURL = ""
+  editURL = "https://darkrepulser026.github.io/fcj-workshop/"
   description = ""
   author = "thienlh@thienlu.com"
   showVisitedLinks = true
