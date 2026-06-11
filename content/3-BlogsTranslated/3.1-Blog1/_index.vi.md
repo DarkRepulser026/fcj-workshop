@@ -1,126 +1,29 @@
 ---
-title: "Blog 1"
-date: 2024-01-01
+title: "Blog 1: Kiến trúc Failover Đa Vùng (Multi-Region) cho Event-Driven với Amazon EventBridge và Route 53: Đảm bảo High Availability trên AWS"
+date: 2026-06-03
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Bài blog mới từ AWS Compute Blog chia sẻ cách xây dựng kiến trúc failover tự động giữa nhiều Region cho các ứng dụng event-driven, được xây dựng dựa trên Amazon EventBridge, Amazon API Gateway và Amazon Route 53. Đây là giải pháp cực kỳ quan trọng giúp đảm bảo High Availability (HA) và khả năng Disaster Recovery (DR) cho hệ thống.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+**Một số điểm đáng chú ý:**
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+* **Thiết lập mô hình Active-Passive Multi-Region**: Amazon Route 53 sử dụng kiểm tra sức khỏe (health checks) để tự động điều hướng traffic sang region thứ cấp khi region chính gặp sự cố, mà không cần can thiệp thủ công.
+* **Đảm bảo tính độc lập theo vùng (Regional Independence)**: Sự kiện được xử lý hoàn toàn tại Region nơi nó được khởi tạo, các region hoạt động độc lập không phụ thuộc lẫn nhau khi bình thường, giúp tối ưu độ trễ (latency).
+* **Đồng bộ dữ liệu thời gian thực**: Sử dụng Amazon DynamoDB Global Tables để tự động sao chép dữ liệu giữa các region, đảm bảo không mất mát dữ liệu hoặc gián đoạn khi failover.
+* **Triển khai hạ tầng một cách đồng nhất**: Sử dụng AWS SAM và CloudFormation để mô đun hóa stack hạ tầng (API Gateway, EventBridge, SQS, Lambda), giúp dễ dàng nhân bản ra nhiều region.
 
----
+**Luồng Triển Khai Thực Tế:**
 
-## Hướng dẫn kiến trúc
+* **Deploy Primary Stack**: Khởi tạo API Gateway, EventBus, Route 53 Health Check với failover routing type là PRIMARY và bảng DynamoDB Global.
+* **Deploy Secondary Stack**: Khởi tạo hạ tầng tương tự tại region thứ cấp, đặt Route 53 routing type là SECONDARY và liên kết chung tới bảng DynamoDB Global.
+* **Test Event Processing**: Luồng xử lý sự kiện: API Gateway tiếp nhận → EventBridge định tuyến → SQS lưu hàng đợi → Lambda tiêu thụ và xử lý → ghi kết quả vào DynamoDB.
+* **Giả lập Tự Động Failover**: Chủ động xóa API Gateway base path/stage ở primary region, đợi khoảng 90 giây để Route 53 health check phát hiện sự cố, sau đó quan sát traffic được tự động điều hướng hoàn toàn sang region thứ cấp.
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+**Kết Luận:**
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+Route 53 health-based failover là một công cụ mạnh mẽ mang đến sự linh hoạt tối đa, hỗ trợ tốt cả hai tình huống: bảo trì hệ thống có chủ đích hoặc region bị downtime ngoài ý muốn, phục vụ tốt cho các ứng dụng enterprise.
 
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
-
----
-
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
-
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
-
----
-
-## Lựa chọn công nghệ và phạm vi giao tiếp
-
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
-
----
-
-## The pub/sub hub
-
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
-
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
-
----
-
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Những ai đang xây dựng kiến trúc event-driven yêu cầu tính sẵn sàng cao hoặc tìm giải pháp HA/DR đa vùng trên AWS có thể tham khảo hướng tiếp cận này.
