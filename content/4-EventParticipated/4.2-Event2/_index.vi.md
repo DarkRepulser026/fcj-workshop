@@ -12,6 +12,7 @@ pre: " <b> 4.2. </b> "
     *   **Giá trị bền vững:** Bằng đại học và kiến thức nền tảng vẫn cực kỳ quan trọng để cạnh tranh toàn cầu; AI chỉ là bộ khuếch đại cho người có năng lực.
 
 ### **2. Diễn giả 2 (Tinh Truong): Context is Everything - Making AI Actually Work For You**
+*   **Nội dung chính:**
     *   **Internet Buller:** Cảnh báo tình trạng "copy-paste" mã nguồn từ internet hoặc AI mà không hiểu ngữ cảnh, dẫn đến việc build hệ thống rời rạc, không phù hợp với quy chuẩn công ty.
     *   **Tối ưu Ngữ cảnh:** Cần cung cấp thông tin chuyên biệt (domain-specific) cho AI thay vì những kiến thức chung chung đã có sẵn trên mạng để nhận được câu trả lời chính xác nhất.
     *   **AI Mindset & Adoption:** Khuyến khích tìm hiểu cách áp dụng AI vào quy trình làm việc của các công ty top-tier thay vì chỉ dùng AI để giải bài tập.
