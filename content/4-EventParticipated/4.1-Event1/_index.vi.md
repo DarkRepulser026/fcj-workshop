@@ -1,125 +1,45 @@
 ---
-title: "Event 1"
-date: 2024-01-01
+title: "Event 1: FCAJ Community Day - 2026-05-09"
+date: 2026-05-09
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
+### **1. Diễn giả 1 (Huynh Hoang Long): Addicted to Learning Like You're Addicted to Social Media**
+Diễn giả này tập trung vào khía cạnh tâm lý và thói quen để giúp các bạn sinh viên vượt qua sự trì hoãn và xây dựng đam mê học tập như cách chúng ta "nghiện" game hay mạng xã hội.
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+*   **Nguyên nhân của sự trì hoãn:** Diễn giả giải thích rằng bộ não thường chọn mạng xã hội thay vì học tập vì nó mang lại **phần thưởng nhanh**, kích thích sự **tò mò** và đòi hỏi **động lực thấp**. Ngược lại, việc học thường cho kết quả chậm và yêu cầu sự tập trung lâu dài, khiến não bộ dễ nản lòng.
+*   **Cơ chế Dopamine:** Dopamine không chỉ tiết ra khi nhận phần thưởng mà quan trọng nhất là khi bộ não **kỳ vọng** phần thưởng sắp đến.
+*   **Các kỹ thuật "Hack" não bộ:**
+    *   **Canh bạc Dopamine:** Tự tạo ra các mẩu giấy ghi phần thưởng nhỏ và bốc thăm sau mỗi 10-15 phút học để kích thích sự tò mò của não.
+    *   **Tận dụng nỗi sợ mất mát:** Sử dụng phương pháp "lập chuỗi" (streak) giống như điểm danh trong game hay TikTok. Việc nhìn thấy một chuỗi ngày học tập liên tục trên lịch sẽ khiến bạn sợ làm đứt chuỗi và có động lực học tiếp.
+    *   **Đánh lừa hạch hạnh nhân:** Chia nhỏ kiến thức khổng lồ thành những tác vụ cực nhỏ (quy tắc 2 phút) để não không cảm thấy bị ngợp.
+    *   **Gamification (Trò chơi hóa):** Biến việc học thành việc cày cấp, tích lũy XP và tự thưởng cho mình khi đạt cột mốc nhất định.
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+### **2. Diễn giả 2 (Nguyen Tuan Thinh): Automated Prompt Engineering: Enhancing LLM Output Quality**
+Diễn giả này trình bày về kỹ thuật tương tác với AI và giới thiệu sản phẩm thực tế được xây dựng trên nền tảng AWS.
 
-### Mục Đích Của Sự Kiện
+*   **Kỹ thuật Prompt Engineering:** Nhấn mạnh rằng AI sẽ cho kết quả tồi nếu chỉ sử dụng các câu lệnh chung chung. Một câu lệnh tốt cần có 7 thành phần: Vai trò (Role), Chỉ dẫn (Instruction), Ngữ cảnh (Context), Dữ liệu đầu vào (Input), Định dạng đầu ra (Output format), Ví dụ (Example) và Ràng buộc (Constraint).
+*   **Kỹ thuật AI nâng cao:** Giới thiệu các phương pháp như **Chain of Thought** (suy nghĩ từng bước) và **Tree of Thought** (sử dụng cấu trúc cây để tìm kết quả tốt nhất).
+*   **Dự án Optimizer:** Đây là một công cụ giúp tối ưu hóa câu lệnh cho AI, sử dụng kiến trúc **Serverless** trên AWS.
+*   **Công nghệ sử dụng:** S3 và CloudFront cho Front-end; API Gateway và Lambda cho Logic; Amazon Bedrock để kết nối với các mô hình AI (như Claude 3.5 Sonnet); DynamoDB để lưu trữ lịch sử.
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+### **3. Diễn giả 3 (Khang Nguyen): AI-Ready Fresher - Skill and Mindset**
+Với kinh nghiệm 3 năm làm việc, diễn giả chia sẻ về những điều doanh nghiệp thực sự cần ở một nhân sự trẻ trong thời đại AI.
 
-### Danh Sách Diễn Giả
+*   **Tập trung vào nền tảng (Foundation):** Trong một thế giới thay đổi nhanh, những thứ không thay đổi chính là nền tảng. Doanh nghiệp không cần bạn biết hàng trăm dịch vụ, mà cần bạn nắm vững tư duy cốt lõi (Thought Process) của 5-10 dịch vụ chính.
+*   **AI là bộ khuếch đại (Amplifier):** AI sẽ làm người yếu trở nên tệ hơn (vì lười tư duy) và làm người giỏi trở nên xuất sắc gấp 10 lần. Đừng để AI "tư duy hộ", bạn có thể outsource việc thực thi nhưng không thể outsource sự hiểu biết.
+*   **Tầm quan trọng của câu hỏi "Tại sao" (Why):** Luôn chất vấn lý do tại sao chọn giải pháp này mà không phải giải pháp kia. Doanh nghiệp đánh giá cao cách bạn tư duy hơn là việc bạn đưa ra kết quả đúng hay sai.
+*   **Sự liêm chính (Integrity):** Làm việc hết mình ngay cả khi không có ai giám sát, xử lý cả những trường hợp ngoại lệ mà đề bài không yêu cầu.
+*   **Nhìn nhận dài hạn:** Đầu tư vào kiến thức, mạng lưới quan hệ (Network) và trải nghiệm thay vì chỉ nhìn vào mức lương ngắn hạn.
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+### **4. Diễn giả 4 (Thao Nguyen Phuong): Phương pháp BMAD trong phát triển phần mềm**
+Diễn giả giới thiệu một phương pháp luận mới để làm việc với AI một cách có hệ thống, tránh tình trạng "Vibe Coding" (code theo cảm tính dẫn đến rác code).
 
-### Nội Dung Nổi Bật
-
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
-
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
-
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
-
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
-
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
-
-#### Domain-Driven Design (DDD)
-
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
-
-#### Event-Driven Architecture
-
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
-
-### Những Gì Học Được
-
-#### Tư Duy Thiết Kế
-
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
-
-#### Kiến Trúc Kỹ Thuật
-
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
-
-#### Chiến Lược Hiện Đại Hóa
-
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
-
-### Ứng Dụng Vào Công Việc
-
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
-
-### Trải nghiệm trong event
-
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
-
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
-
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
-
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
-
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+*   **Phương pháp BMAD (Brief Method for AI Development):** Đây là phương pháp mã nguồn mở giúp quản lý dự án AI theo quy trình chặt chẽ của kỹ nghệ phần mềm.
+*   **Quy trình thực hiện:**
+    1.  **Planning:** Brainstorm với AI để tạo ra tài liệu yêu cầu sản phẩm (PRD/VOD).
+    2.  **Architecting:** Thiết kế kiến trúc hệ thống chuẩn chỉnh.
+    3.  **Shredding:** Chia nhỏ tài liệu thành các Epic và Story nhỏ để AI dễ hiểu và tránh hiện tượng "ảo giác" (hallucination).
+    4.  **Multi-Agent:** Sử dụng các "đại lý" AI chuyên biệt đóng vai trò như PM, Architect, Scrum Master, Developer và Reviewer để phối hợp thực hiện dự án.
+*   **Triết lý:** Tập trung vào việc viết tài liệu (document) thật chuẩn, từ đó AI sẽ tự động sinh ra mã nguồn chất lượng mà không cần con người quản lý quá nhiều code thủ công.

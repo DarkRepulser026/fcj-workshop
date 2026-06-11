@@ -1,126 +1,45 @@
 ---
-title: "Event 1"
-date: 2024-01-01
+title: "Event 1: FCAJ Community Day - 2026-05-09"
+date: 2026-05-09
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
+### **1. Speaker 1 (Huynh Hoang Long): Addicted to Learning Like You're Addicted to Social Media**
+This session focused on psychology and habit-building to help students overcome procrastination and develop a passion for learning, similar to the way people become "addicted" to social media or gaming.
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+*   **Causes of Procrastination:** The speaker explained that the brain often chooses social media over studying because it offers **quick rewards**, stimulates **curiosity**, and requires **low motivation**. Conversely, learning typically yields slow results and requires long-term focus, which can be discouraging to the brain.
+*   **The Dopamine Mechanism:** Dopamine is not just released when receiving a reward; its most significant release occurs when the brain **expects** a reward is coming.
+*   **"Brain Hacking" Techniques:**
+    *   **Dopamine Gambling:** Create small slips of paper listing minor rewards and draw one after every 10–15 minutes of studying to stimulate the brain's curiosity.
+    *   **Loss Aversion:** Use a "streak" method (similar to daily check-ins in games or TikTok). Seeing a continuous chain of study days on a calendar makes you fear breaking the streak, providing motivation to continue.
+    *   **Deceiving the Amygdala:** Break massive amounts of knowledge into tiny, manageable tasks (the **2-minute rule**) so the brain does not feel overwhelmed.
+    *   **Gamification:** Turn learning into a game by "leveling up," accumulating XP, and rewarding yourself upon reaching specific milestones.
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+### **2. Speaker 2 (Nguyen Tuan Thinh): Automated Prompt Engineering: Enhancing LLM Output Quality**
+This speaker discussed techniques for interacting with AI and introduced a functional product built on AWS.
 
-### Event Objectives
+*   **Prompt Engineering Techniques:** The speaker emphasized that using generic commands results in poor AI outputs. A high-quality prompt should include seven components: **Role, Instruction, Context, Input, Output Format, Example, and Constraint**.
+*   **Advanced AI Techniques:** The session introduced methods such as **Chain of Thought** (step-by-step reasoning) and **Tree of Thought** (using a tree structure to explore multiple paths and find the best result).
+*   **The Optimizer Project:** This is a tool designed to optimize AI prompts using a **Serverless** architecture on AWS.
+    *   **Technologies Used:** S3 and CloudFront for the frontend; API Gateway and Lambda for the backend logic; Amazon Bedrock to connect to AI models (like Claude 3.5 Sonnet); and DynamoDB for storing history.
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+### **3. Speaker 3 (Khang Nguyen): AI-Ready Fresher - Skill and Mindset**
+Drawing from three years of professional experience, the speaker shared insights into what businesses truly value in young talent during the AI era.
 
-### Speakers
+*   **Focus on Foundations:** In a world of rapid change, the foundations remain constant. Companies do not expect you to know every service; instead, they want you to master the core **thought process** behind 5–10 essential services.
+*   **AI as an Amplifier:** AI is an **amplifier**—it can make a weak worker worse (due to lazy thinking) but can make a skilled worker 10x more effective. You should not let AI think for you; you can outsource execution, but you cannot outsource **understanding**.
+*   **The Importance of "Why":** Always question why you chose one solution over another. Businesses value how you think more than whether you simply provide a right or wrong answer.
+*   **Integrity:** Working hard even when no one is watching and proactively handling edge cases that were not explicitly requested in the requirements.
+*   **Long-term Perspective:** Invest in knowledge, your professional **network**, and experiences rather than focusing solely on short-term salary gains.
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+### **4. Speaker 4 (Thao Nguyen Phuong): Phương pháp BMAD trong phát triển phần mềm**
+The speaker introduced a systematic methodology for working with AI to avoid "**Vibe Coding**" (coding based on intuition, which often leads to "garbage" code).
 
-### Key Highlights
-
-#### Identifying the drawbacks of legacy application architecture
-
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
-
-#### Transitioning to modern application architecture – Microservices
-
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
-
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
-
-#### Domain-Driven Design (DDD)
-
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
-
-#### Event-Driven Architecture
-
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
-
-### Key Takeaways
-
-#### Design Mindset
-
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
-
-#### Technical Architecture
-
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
-
-### Event Experience
-
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
-
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
-
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
-
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
-
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+*   **The BMAD Method (Brief Method for AI Development):** This is an open-source framework designed to manage AI projects through a rigorous software engineering process.
+*   **Implementation Process:**
+    1.  **Planning:** Brainstorm with AI to generate a Product Requirements Document (PRD/VOD).
+    2.  **Architecting:** Design a standardized and professional system architecture.
+    3.  **Shredding:** Break large documents down into small **Epics and Stories** to make them easier for AI to understand and to prevent hallucinations.
+    4.  **Multi-Agent:** Utilize specialized AI agents acting as **PM, Architect, Scrum Master, Developer, and Reviewer** to coordinate project execution.
+*   **Philosophy:** The core philosophy is to focus on writing near-perfect **documentation**; if the documentation is precise, the AI will automatically generate high-quality source code, reducing the need for manual code management.

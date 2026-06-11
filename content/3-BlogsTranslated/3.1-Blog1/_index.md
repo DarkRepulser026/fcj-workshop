@@ -1,5 +1,5 @@
 ---
-title: "Blog 1"
+title: "Blog 1: Multi-Region event-driven failover architecture with Amazon EventBridge and Route 53"
 date: 2026-06-03
 weight: 1
 chapter: false
