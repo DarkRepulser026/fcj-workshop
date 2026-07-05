@@ -30,35 +30,7 @@ The project gives hands-on experience with a realistic serverless + AI architect
 
 The platform uses a serverless, event-driven AWS architecture. A review file uploaded to S3 triggers a Lambda function that validates and cleans the data before storing it in DynamoDB. Writing to DynamoDB triggers a second Lambda (via DynamoDB Streams) that calls Amazon Comprehend to score sentiment, optionally enriching results with a call to Meta Llama 3.1 8B Instruct through the OpenRouter API. Negative results publish an alert through SNS. A Cognito-authenticated API Gateway + Lambda layer serves the React dashboard, which visualizes the data.
 
-```
-Upload (CSV/JSON)
-      │
-      ▼
-Amazon S3 (raw-reviews bucket)
-      │  S3 event
-      ▼
-AWS Lambda — review-processor
-  (validate, clean, de-duplicate)
-      │
-      ▼
-Amazon DynamoDB (Reviews / Products / Users)
-      │  DynamoDB Stream
-      ▼
-AWS Lambda — sentiment-analyzer
-  (Amazon Comprehend + optional OpenRouter call
-   to Meta Llama 3.1 8B Instruct over HTTPS)
-      │
-      ▼
-Amazon SNS ── email alert on negative sentiment
-
-Amazon Cognito ── API Gateway (authorizer) ── AWS Lambda — api-handler
-      │
-      ▼
-React Dashboard (S3 + CloudFront / Amplify)
-
-Amazon CloudWatch ── logs, dashboards, alarms across all Lambda functions
-AWS Secrets Manager / SSM Parameter Store ── stores the OpenRouter API key
-```
+![Architecture Diagram](/images/2-Proposal/architecture-diagram.png)
 
 **AWS Services Used**
 - **Amazon S3**: Stores raw uploaded review files and processed reports (2 buckets), public access blocked, encrypted at rest.
