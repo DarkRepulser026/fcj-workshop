@@ -1,55 +1,32 @@
 ---
 title: "Worklog Tuần 2"
-date: 2024-01-01
-weight: 1
+date: 2026-04-27
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
+### Mục tiêu Tuần 2:
 
-### Mục tiêu tuần 2:
+* Phân biệt và áp dụng đúng các cơ chế bảo mật mạng trong VPC: Security Groups và Network ACLs.
+* Triển khai hạ tầng VPC hoàn chỉnh với Subnet đa AZ, Internet Gateway, Route Table và VPC Flow Logs.
+* Triển khai và kiểm tra kết nối EC2 instances thông qua SSH và AWS Systems Manager Session Manager.
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+### Nhiệm vụ cần thực hiện trong tuần này:
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Chủ đề | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | --- | --- | --- | --- |
+| VPC Security & Hạ tầng mạng | **VPC Security Controls & Hạ tầng EC2** <br> - Tìm hiểu VPC Security Controls: Security Groups (stateful, cấp instance) và NACLs (stateless, cấp subnet), so sánh sự khác biệt <br> - Thực hành **VPC Preparation Workshop**: tạo VPC, Subnet đa AZ (public & private), Internet Gateway, Route Table, Security Group, bật VPC Flow Logs <br> - Triển khai hạ tầng EC2: tạo EC2 Instances, kiểm tra kết nối SSH và AWS Systems Manager Session Manager, tạo NAT Gateway đa AZ, sử dụng VPC Reachability Analyzer | 27/04/2026 | 03/05/2026 | AWS Study Group |
 
+# Thành tựu Tuần 2
 
-### Kết quả đạt được tuần 2:
+## Bảo mật Mạng trong VPC
+- So sánh và nắm rõ sự khác biệt giữa **Security Groups** (stateful, hoạt động ở cấp instance) và **Network ACLs** (stateless, hoạt động ở cấp subnet).
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Triển khai Hạ tầng VPC
+- Hoàn thành **VPC Preparation Workshop**: tạo VPC, Subnet đa AZ (public & private), Internet Gateway, Route Table, Security Group.
+- Bật **VPC Flow Logs** để giám sát lưu lượng mạng.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+## Triển khai & Kiểm tra EC2
+- Triển khai **EC2 Instances** và kiểm tra kết nối qua **SSH** và **AWS Systems Manager Session Manager**.
+- Cấu hình **NAT Gateway đa AZ** để đảm bảo tính sẵn sàng cao cho kết nối outbound.
+- Sử dụng **VPC Reachability Analyzer** để chẩn đoán kết nối mạng.

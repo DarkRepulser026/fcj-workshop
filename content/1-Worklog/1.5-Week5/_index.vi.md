@@ -1,55 +1,34 @@
 ---
 title: "Worklog Tuần 5"
-date: 2024-01-01
-weight: 1
+date: 2026-05-18
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
+### Mục tiêu Tuần 5:
 
-### Mục tiêu tuần 5:
+* Triển khai giám sát và observability toàn diện với **Amazon CloudWatch**.
+* Thiết lập **Hybrid DNS** với Route 53 Resolver.
+* Thành thạo cấu hình và sử dụng **AWS CLI**.
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+### Nhiệm vụ cần thực hiện trong tuần này:
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Chủ đề | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | --- | --- | --- | --- |
+| Amazon CloudWatch | **Monitoring & Observability** <br> - CloudWatch là dịch vụ giám sát thống nhất thu thập metrics, logs và events trên toàn bộ tài nguyên AWS, hybrid và on-premises <br> - Các tính năng chính: metrics độ phân giải cao (1 giây), lưu trữ dữ liệu 15 tháng, tự động hóa hành động dựa trên cảnh báo, observability end-to-end để giảm MTTR <br> - Làm việc với Metrics từ ứng dụng mẫu trên EC2, xem/tạo custom Metrics từ Logs, cấu hình Alarms, xây dựng Dashboard tùy chỉnh | 18/05/2026 | 24/05/2026 | AWS Study Group |
+| Route 53 Resolver | **Hybrid DNS** <br> - Các tính năng DNS của Route 53: đăng ký public domain, private DNS zones, hybrid DNS engine, phân giải tên miền <br> - Outbound Endpoints: chuyển tiếp DNS query từ AWS đến hệ thống DNS on-premises <br> - Inbound Endpoints: nhận DNS query từ hệ thống on-premises hướng đến domain trên AWS <br> - Resolver Rules: cấu hình chuyển tiếp DNS query cho các domain cụ thể | 18/05/2026 | 24/05/2026 | AWS Study Group |
+| AWS CLI | **AWS Command Line Interface** <br> - CLI là công cụ mã nguồn mở để tương tác và tự động hóa dịch vụ AWS qua dòng lệnh <br> - CLI Profiles: profile mặc định và profile được đặt tên <br> - Cấu hình CLI qua `aws configure`: Access Key ID, Secret Access Key, region mặc định, định dạng output <br> - Các định dạng output: json (mặc định), yaml, yaml-stream, text, table | 18/05/2026 | 24/05/2026 | AWS Study Group |
 
+# Thành tựu Tuần 5
 
-### Kết quả đạt được tuần 5:
+## Giám sát & Observability (CloudWatch)
+- Hiểu CloudWatch là dịch vụ giám sát thống nhất, thu thập metrics/logs/events trên toàn bộ tài nguyên AWS, hybrid và on-premises.
+- Thực hành làm việc với Metrics, custom Metrics từ Logs, cấu hình Alarms và xây dựng Dashboard tùy chỉnh.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Hybrid DNS (Route 53 Resolver)
+- Tìm hiểu Outbound Endpoints (chuyển tiếp query từ AWS ra on-prem) và Inbound Endpoints (nhận query từ on-prem vào AWS).
+- Cấu hình Resolver Rules để định tuyến DNS query cho các domain cụ thể.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+## AWS CLI
+- Nắm rõ khái niệm CLI Profiles (mặc định và có tên) để quản lý nhiều môi trường AWS.
+- Thực hành cấu hình CLI qua `aws configure` và các định dạng output: json, yaml, yaml-stream, text, table.

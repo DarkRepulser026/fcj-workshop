@@ -1,55 +1,37 @@
 ---
 title: "Worklog Tuần 7"
-date: 2024-01-01
-weight: 1
+date: 2026-06-01
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
+### Mục tiêu Tuần 7:
 
-### Mục tiêu tuần 7:
+* Hiểu Hạ tầng Toàn cầu AWS và kiến trúc VPC/IP nâng cao.
+* Triển khai kết nối hybrid với Transit Gateway, Site-to-Site VPN và Route 53.
+* Tìm hiểu VPC Endpoints, PrivateLink, VPC Peering và Transit Gateway Network Manager.
+* Triển khai AWS Managed Microsoft Active Directory và Amazon WorkSpaces.
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+### Nhiệm vụ cần thực hiện trong tuần này:
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Chủ đề | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | --- | --- | --- | --- |
+| Hạ tầng Toàn cầu & VPC | **Hạ tầng Toàn cầu & Kiến trúc VPC** <br> - Hạ tầng Toàn cầu AWS cho Networking: AZs, Regions, Edge Locations <br> - Kiến trúc VPC và Địa chỉ IP: bố cục VPC (Non-Production, Production, Shared Resources, Datacenter) và chiến lược CIDR | 01/06/2026 | 07/06/2026 | AWS Study Group |
+| Kết nối Hybrid | **Transit Gateway, VPN & Hybrid DNS** <br> - Transit Gateway và Site-to-Site VPN: hub trung tâm kết nối nhiều VPC và mạng on-premises <br> - Hybrid DNS với Route 53: Inbound/Outbound Endpoints, Private Hosted Zones, DNS Bind server <br> - VPC Endpoints và PrivateLink: giao tiếp riêng tư với dịch vụ AWS, chiến lược endpoint tập trung, VPC Endpoint Services <br> - VPC Peering và Transit Gateway Network Manager: kết nối trực tiếp giữa hai VPC, giám sát topology mạng toàn cầu | 01/06/2026 | 07/06/2026 | AWS Study Group |
+| WorkSpaces & Active Directory | **Amazon WorkSpaces & AWS Managed AD** <br> - Amazon WorkSpaces: máy tính để bàn ảo trên cloud, hai phương thức kết nối (client app hoặc trình duyệt web) <br> - AWS Managed Microsoft Active Directory: dịch vụ Directory Service được quản lý, High Availability, tích hợp hybrid, phiên bản Standard/Enterprise, các loại Group <br> - Kiến trúc Hạ tầng Lab: EC2 Bastion Host (RDGW), EC2 Windows Server 2022 (AD Manager), AWS Managed Active Directory | 01/06/2026 | 07/06/2026 | AWS Study Group |
 
+# Thành tựu Tuần 7
 
-### Kết quả đạt được tuần 7:
+## Hạ tầng Toàn cầu & Kiến trúc VPC
+- Nắm rõ các khái niệm AZs, Regions, Edge Locations trong hạ tầng toàn cầu AWS.
+- Thiết kế bố cục VPC (Non-Production, Production, Shared Resources, Datacenter) và chiến lược CIDR phù hợp.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Kết nối Hybrid nâng cao
+- Tìm hiểu **Transit Gateway** và **Site-to-Site VPN** làm hub trung tâm kết nối nhiều VPC và mạng on-premises.
+- Cấu hình **Hybrid DNS** với Route 53: Inbound/Outbound Endpoints, Private Hosted Zones, DNS Bind server.
+- Tìm hiểu **VPC Endpoints/PrivateLink** cho giao tiếp riêng tư với dịch vụ AWS, và **VPC Peering** kết hợp Transit Gateway Network Manager để giám sát topology mạng toàn cầu.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+## Ảo hóa & Active Directory
+- Tìm hiểu **Amazon WorkSpaces** — máy tính để bàn ảo trên cloud với hai phương thức kết nối.
+- Triển khai **AWS Managed Microsoft Active Directory**: tính năng High Availability, tích hợp hybrid, các phiên bản Standard/Enterprise.
+- Xây dựng hạ tầng lab: EC2 Bastion Host (RDGW), Windows Server 2022 (AD Manager), AWS Managed AD.

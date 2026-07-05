@@ -1,55 +1,39 @@
 ---
 title: "Worklog Tuần 10"
-date: 2024-01-01
-weight: 2
+date: 2026-06-22
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
+### Mục tiêu Tuần 10:
 
-### Mục tiêu tuần 10:
+* Triển khai ứng dụng serverless bằng **AWS SAM** (Infrastructure as Code).
+* Xây dựng luồng xác thực với **Amazon Cognito**.
+* Thiết lập SSL cho ứng dụng với ACM, Route 53 và CloudFront.
+* Xây dựng hệ thống xử lý đơn hàng bất đồng bộ với **SQS** và **SNS**.
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+### Nhiệm vụ cần thực hiện trong tuần này:
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Chủ đề | Nhiệm vụ | Ngày Bắt đầu | Ngày Hoàn thành | Tài liệu Tham khảo |
+| --- | --- | --- | --- | --- |
+| AWS SAM | **Serverless: Triển khai ứng dụng với AWS SAM Workshop** <br> - Framework IaC dạng YAML <br> - Xây dựng lại ứng dụng web bằng SAM <br> - Kiểm thử và dọn dẹp tài nguyên | 22/06/2026 | 28/06/2026 | AWS Study Group |
+| Amazon Cognito | **Serverless: Xác thực với Amazon Cognito Workshop** <br> - User Pools, Identity Pools <br> - Luồng xác thực kết hợp <br> - Triển khai Lambda/API <br> - Kiểm thử end-to-end | 22/06/2026 | 28/06/2026 | AWS Study Group |
+| SSL Setup | **Serverless: Thiết lập SSL Workshop** <br> - AWS Certificate Manager, Amazon Route 53 <br> - CloudFront với S3 origin <br> - Tạo domain/Hosted Zone, yêu cầu chứng chỉ SSL <br> - Dọn dẹp tài nguyên | 22/06/2026 | 28/06/2026 | AWS Study Group |
+| SQS & SNS | **Serverless: Xử lý Đơn hàng với SQS và SNS Workshop** <br> - Amazon SQS, Amazon SNS <br> - Luồng xử lý đơn hàng (checkout → SQS/SNS → admin xử lý qua API) <br> - Triển khai Lambda/API <br> - Kiểm thử, dọn dẹp tài nguyên | 22/06/2026 | 28/06/2026 | AWS Study Group |
 
+# Thành tựu Tuần 10
 
-### Kết quả đạt được tuần 10:
+## Infrastructure as Code (AWS SAM)
+- Xây dựng lại ứng dụng web bằng framework **AWS SAM** (YAML), thực hiện kiểm thử và dọn dẹp tài nguyên.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Xác thực với Amazon Cognito
+- Triển khai **User Pools** và **Identity Pools**, xây dựng luồng xác thực kết hợp.
+- Triển khai Lambda/API tích hợp Cognito và thực hiện kiểm thử end-to-end.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+## Thiết lập SSL
+- Cấu hình **AWS Certificate Manager**, **Amazon Route 53** và **CloudFront** với S3 origin.
+- Tạo domain/Hosted Zone, yêu cầu chứng chỉ SSL và dọn dẹp tài nguyên sau khi hoàn tất.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+## Xử lý Đơn hàng Bất đồng bộ (SQS & SNS)
+- Xây dựng luồng xử lý đơn hàng: checkout → SQS/SNS → admin xử lý qua API.
+- Triển khai Lambda/API cho luồng xử lý, kiểm thử và dọn dẹp tài nguyên.
