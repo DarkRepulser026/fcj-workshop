@@ -1,11 +1,11 @@
 ---
-title: "Nhật ký công việc"
-date: 2025-01-01
+title: "Worklog"
+date: 2025-07-05
 weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
-Nhật ký công việc được tổ chức theo FCAJ kéo dài 12 tuần. Mỗi tuần tập trung vào một giai đoạn học tập, từ thiết lập tài khoản và các dịch vụ cốt lõi, đến di chuyển hệ thống (migration), container, serverless, bảo mật, và cuối cùng là đánh giá tổng kết (capstone).
+Worklog được tổ chức theo FCAJ kéo dài 12 tuần. Mỗi tuần tập trung vào một giai đoạn học tập, từ thiết lập tài khoản và các dịch vụ cốt lõi, đến di chuyển hệ thống (migration), container, serverless, bảo mật, và cuối cùng là đánh giá tổng kết (capstone).
 
 **Tuần 1:** [Làm quen với tài khoản AWS Free Tier, AWS CLI và quản lý chi phí cơ bản](1.1-week1/)
 
@@ -27,6 +27,6 @@ Nhật ký công việc được tổ chức theo FCAJ kéo dài 12 tuần. Mỗ
 
 **Tuần 10:** [AWS SAM, Amazon Cognito, thiết lập SSL và xử lý đơn hàng với SQS/SNS](1.10-week10/)
 
-**Tuần 11:** _Đang cập nhật_
+**Tuần 11:** [Lên kế hoạch kiến trúc, bảo mật và mô hình dữ liệu cho ReviewSentinel](1.10-week11/)
 
 **Tuần 12:** _Đang cập nhật_

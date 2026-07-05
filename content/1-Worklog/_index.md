@@ -1,6 +1,6 @@
 ---
 title: "Worklog"
-date: 2025-01-01
+date: 2025-07-05
 weight: 1
 chapter: false
 pre: " <b> 1. </b> "
@@ -28,6 +28,6 @@ The worklog is organized as a 12-week First Cloud Journey on AWS. Each week focu
 
 **Week 10:**   [AWS SAM, Amazon Cognito, SSL setup, and order processing with SQS/SNS](1.10-week10/)
 
-**Week 11:** _To be updated_
+**Week 11:**   [ReviewSentinel architecture, security, and data model planning](1.10-week11/)
 
 **Week 12:** _To be updated_

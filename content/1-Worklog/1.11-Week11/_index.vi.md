@@ -1,55 +1,51 @@
 ---
 title: "Worklog Tuần 11"
-date: 2024-01-01
-weight: 2
+date: 2026-06-29
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
 
-### Mục tiêu tuần 11:
+### Mục Tiêu Tuần 11
+* Hoàn thiện kiến trúc tổng thể của hệ thống ReviewSentinel (lớp edge, application, xử lý, phân tích, giám sát).
+* Xác định mô hình bảo mật: luồng xác thực Cognito, phân quyền IAM theo nguyên tắc tối thiểu, phân quyền API Gateway.
+* Thiết kế mô hình dữ liệu DynamoDB (bảng Reviews, Products, Users và các mẫu truy vấn).
+* Soạn thảo đặc tả các Lambda function (review-processor, sentiment-analyzer, API handler) và trigger tương ứng.
+* Chuẩn bị cấu trúc module Terraform và môi trường dev/test cục bộ.
+* Bắt đầu triển khai hạ tầng nền tảng (S3 bucket, bảng DynamoDB) làm nền cho việc xây dựng ở Tuần 12.
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+---
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Các Công Việc Thực Hiện Trong Tuần
 
+| Ngày | Công Việc | Ngày Bắt Đầu | Ngày Hoàn Thành | Tài Liệu Tham Khảo |
+|-----|------|-------------|------------------|--------------------|
+| 2 | Rà soát và hoàn thiện sơ đồ kiến trúc ReviewSentinel (các lớp edge/app/processing/analytics). <br>- Xác nhận lựa chọn dịch vụ AWS và luồng dữ liệu. | 29/06/2026 | 29/06/2026 | AWS Study Group |
+| 3 | Thiết kế mô hình bảo mật: Cognito user pool, authorizer API Gateway dựa trên JWT, phân quyền IAM. <br>- Ghi nhận các rủi ro bảo mật cần lưu ý đối với dự án ở quy mô demo. | 30/06/2026 | 30/06/2026 | AWS Study Group |
+| 4 | Thiết kế schema DynamoDB (Reviews, Products, Users) gồm khóa chính, GSI và các mẫu truy cập dữ liệu. <br>- Lên kế hoạch bố trí S3 bucket và event trigger. | 01/07/2026 | 01/07/2026 | AWS Study Group |
+| 5 | Soạn thảo đặc tả Lambda function: `review_processor`, `sentiment_analyzer`, `api_handler`. <br>- Xác định input/output và cách xử lý lỗi thống nhất. | 02/07/2026 | 02/07/2026 | AWS Study Group |
+| 6 | Thiết lập cấu trúc dự án Terraform và môi trường cục bộ. <br>- Triển khai các resource nền tảng: S3 bucket và bảng DynamoDB. | 03/07/2026 | 03/07/2026 | AWS Study Group |
 
-### Kết quả đạt được tuần 11:
+---
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### Kết Quả Đạt Được Tuần 11
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+#### **1. Hoàn Thiện Kiến Trúc Hệ Thống**
+Tôi đã rà soát và chốt kiến trúc ReviewSentinel (v5), bao gồm lớp edge/bảo mật, lớp ứng dụng (API Gateway, Cognito, API Lambda), lớp xử lý (Lambda kích hoạt bởi S3 và DynamoDB Stream), và lớp phân tích (Comprehend, Bedrock). Vì đây là dự án học tập/demo, tôi chủ động giữ thiết kế đơn giản, không đầu tư quá mức cho khả năng mở rộng, mà ưu tiên tính rõ ràng và đúng đắn của chức năng.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+#### **2. Thiết Kế Mô Hình Bảo Mật**
+Tôi đã lên kế hoạch cho luồng xác thực và phân quyền: Cognito User Pool cho đăng ký/đăng nhập, token JWT được xác thực qua Lambda authorizer của API Gateway, và các IAM role được giới hạn quyền tối thiểu cho từng Lambda function. Tôi cũng ghi lại các nguyên tắc bảo mật cơ bản cần áp dụng sau này — không để S3 bucket công khai, mã hóa dữ liệu tại DynamoDB, và không ghi dữ liệu nhạy cảm vào log.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+#### **3. Thiết Kế Mô Hình Dữ Liệu**
+Tôi đã xác định cấu trúc bảng DynamoDB cho Reviews, Products và Users, bao gồm khóa chính và các GSI cần thiết để phục vụ các mẫu truy vấn đã lên kế hoạch (ví dụ: review theo sản phẩm, thống kê theo khoảng thời gian). Tôi cũng đã phác thảo cách bố trí S3 bucket cho việc upload review thô và các event notification sẽ kích hoạt xử lý ở bước tiếp theo.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+#### **4. Soạn Thảo Đặc Tả Lambda Function**
+Tôi đã viết đặc tả cho ba Lambda function chính — `review_processor` (kích hoạt bởi S3, xử lý validate/làm sạch/loại trùng dữ liệu), `sentiment_analyzer` (kích hoạt bởi DynamoDB Streams, phân tích qua Comprehend và tùy chọn Bedrock), và `api_handler` (các endpoint REST của API Gateway). Mỗi đặc tả đều nêu rõ input/output mong đợi và định dạng xử lý lỗi/phản hồi thống nhất nhằm giảm thiểu vấn đề khi tích hợp ở giai đoạn triển khai.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+#### **5. Chuẩn Bị Cấu Trúc Terraform Và Bắt Đầu Triển Khai Nền Tảng**
+Tôi đã thiết lập cấu trúc dự án Terraform (provider, biến, module) và triển khai các resource nền tảng đầu tiên — S3 bucket và bảng DynamoDB — để Tuần 12 có thể tập trung vào việc kết nối Lambda, API Gateway và Cognito mà không phải lên kế hoạch lại phần hạ tầng cơ bản.
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+#### **6. Đặt Nền Tảng Cho Tuần 12**
+Sau khi hoàn thiện kiến trúc, mô hình bảo mật, mô hình dữ liệu và đặc tả Lambda, cùng với việc đã triển khai xong các resource Terraform nền tảng, dự án đã sẵn sàng bước vào giai đoạn triển khai đầy đủ trong tuần tới: deploy các Lambda function, kết nối API Gateway với phân quyền Cognito, tích hợp frontend React, và kiểm thử toàn bộ luồng end-to-end cùng với giám sát qua CloudWatch.
 
-
+---
