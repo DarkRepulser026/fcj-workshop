@@ -30,35 +30,7 @@ Dự án mang lại kinh nghiệm thực hành với một kiến trúc serverle
 
 Nền tảng sử dụng kiến trúc AWS serverless, hướng sự kiện (event-driven). Một file đánh giá được tải lên S3 sẽ kích hoạt hàm Lambda kiểm tra và làm sạch dữ liệu trước khi lưu vào DynamoDB. Việc ghi vào DynamoDB kích hoạt hàm Lambda thứ hai (qua DynamoDB Streams) gọi Amazon Comprehend để chấm điểm cảm xúc, có thể làm giàu thêm bằng một lệnh gọi đến Meta Llama 3.1 8B Instruct qua API OpenRouter. Kết quả tiêu cực sẽ gửi cảnh báo qua SNS. Lớp API Gateway + Lambda có xác thực Cognito phục vụ dashboard React, nơi trực quan hóa dữ liệu.
 
-```
-Tải lên (CSV/JSON)
-      │
-      ▼
-Amazon S3 (bucket raw-reviews)
-      │  Sự kiện S3
-      ▼
-AWS Lambda — review-processor
-  (kiểm tra, làm sạch, loại trùng lặp)
-      │
-      ▼
-Amazon DynamoDB (Reviews / Products / Users)
-      │  DynamoDB Stream
-      ▼
-AWS Lambda — sentiment-analyzer
-  (Amazon Comprehend + gọi tùy chọn đến OpenRouter
-   — Meta Llama 3.1 8B Instruct qua HTTPS)
-      │
-      ▼
-Amazon SNS ── cảnh báo email khi cảm xúc tiêu cực
-
-Amazon Cognito ── API Gateway (authorizer) ── AWS Lambda — api-handler
-      │
-      ▼
-Dashboard React (S3 + CloudFront / Amplify)
-
-Amazon CloudWatch ── logs, dashboard, cảnh báo cho toàn bộ hàm Lambda
-AWS Secrets Manager / SSM Parameter Store ── lưu trữ API key của OpenRouter
-```
+![Architecture Diagram](/fcj-workshop/images/2-Proposal/architecture-diagram.png)
 
 **Các Dịch Vụ AWS Sử Dụng**
 - **Amazon S3**: Lưu trữ file đánh giá thô được tải lên và báo cáo đã xử lý (2 bucket), chặn truy cập công khai, mã hóa khi lưu trữ.
