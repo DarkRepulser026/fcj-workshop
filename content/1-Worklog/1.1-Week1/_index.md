@@ -1,28 +1,31 @@
 ---
 title: "Week 1 Worklog"
-date: 2024-01-01
+date: 2026-04-20
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-
 ### Week 1 Objectives:
 
-* Get familiar with the First Cloud Journey program and the AWS learning path.
-* Set up the AWS Free Tier account, console access, and AWS CLI.
-* Learn the basic AWS service groups and launch the first EC2 instance.
+* Understand the overall internship program and the goals for each week.
+* Create and configure an **AWS Free Tier** account, and get familiar with the AWS Management Console and AWS CLI.
+* Learn AWS cost management tools (AWS Budgets) and the available AWS Support plans.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Meet the team and review internship rules <br> - Read the program overview and weekly goals                                                                                                         |  |       | <https://cloudjourney.awsstudygroup.com/> |
-| 3   | - Learn AWS service categories <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + Security <br>                                                     |  |       | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create the AWS Free Tier account <br> - Install and configure AWS CLI <br> - Check the AWS Management Console and regions                                                            |  |       | <https://docs.aws.amazon.com/cli/> |
-| 5   | - Learn EC2 basics <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + Key pairs <br>&emsp; + Security groups <br> - Connect with SSH                                           |  |       | <https://docs.aws.amazon.com/ec2/> |
-| 6   | - Launch the first EC2 instance <br> - Attach an EBS volume <br> - Practice basic instance management                                                                           |  |       | <https://cloudjourney.awsstudygroup.com/> |
 
+| Topic | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| Orientation & Setup | **Program Orientation & Account Setup** <br> - Review the overall program and weekly objectives <br> - Create an **AWS Free Tier** account <br> - Install and configure **AWS CLI** <br> - Explore the **AWS Management Console** and AWS Regions <br> - Learn **Cost Management** with AWS Budgets: Budget Templates, Cost Budget, Usage Budget, RI Budget, Savings Plan Budget <br> - Learn about **AWS Support** | 04/20/2026 | 04/26/2026 | AWS Study Group |
 
-### Week 1 Achievements:
+# Week 1 Achievements
 
-* temp
+## Program Orientation
+- Gained a clear understanding of the internship program and the objectives for each week, forming the foundation for planning subsequent weeks.
 
+## Account & Tooling Setup
+- Successfully created an **AWS Free Tier** account and became familiar with the **AWS Management Console** and the concept of Regions.
+- Installed and configured **AWS CLI** locally, preparing for command-line operations in upcoming weeks.
+
+## Cost Management & Support
+- Learned the different **Budget Templates** available in AWS Budgets: Cost Budget, Usage Budget, RI Budget, and Savings Plan Budget.
+- Explored the available **AWS Support** plans and how AWS support services work.
