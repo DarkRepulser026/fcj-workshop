@@ -5,6 +5,9 @@ weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
+
+![Proof](/fcj-workshop/images/4-EventParticipated/20260509_pov.jpg)
+
 ### **1. Speaker 1 (Huynh Hoang Long): Addicted to Learning Like You're Addicted to Social Media**
 *   **Causes of Procrastination:** The speaker explained that the brain often chooses social media over studying because it offers **quick rewards**, stimulates **curiosity**, and requires **low motivation**. Conversely, learning typically yields slow results and requires long-term focus, which can be discouraging to the brain.
 *   **The Dopamine Mechanism:** Dopamine is not just released when receiving a reward; its most significant release occurs when the brain **expects** a reward is coming.

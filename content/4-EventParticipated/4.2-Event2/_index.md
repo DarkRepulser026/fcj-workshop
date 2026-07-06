@@ -5,6 +5,11 @@ weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
+
+![Proof](/fcj-workshop/images/4-EventParticipated/20260523_pov.jpg)
+
+![Proof2](/fcj-workshop/images/4-EventParticipated/20260523.jpg)
+
 ### **1. Speaker 1 (Nguyen Gia Hung): Labor Market Trends and the Power of Foundations**
 *   **Key Points:**
     *   **AI Paradox:** AI makes software development cheaper, leading to an explosion in software demand, which creates new jobs like fixing AI-generated code.

@@ -5,6 +5,9 @@ weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
+
+![Proof](/fcj-workshop/images/4-EventParticipated/20260509_pov.jpg)
+
 ### **1. Diễn giả 1 (Huynh Hoang Long): Addicted to Learning Like You're Addicted to Social Media**
 *   **Nguyên nhân của sự trì hoãn:** Diễn giả giải thích rằng bộ não thường chọn mạng xã hội thay vì học tập vì nó mang lại **phần thưởng nhanh**, kích thích sự **tò mò** và đòi hỏi **động lực thấp**. Ngược lại, việc học thường cho kết quả chậm và yêu cầu sự tập trung lâu dài, khiến não bộ dễ nản lòng.
 *   **Cơ chế Dopamine:** Dopamine không chỉ tiết ra khi nhận phần thưởng mà quan trọng nhất là khi bộ não **kỳ vọng** phần thưởng sắp đến.

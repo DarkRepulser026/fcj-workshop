@@ -5,6 +5,9 @@ weight: 3
 chapter: false
 pre: " <b> 4.3. </b> "
 ---
+
+![Proof](/fcj-workshop/images/4-EventParticipated/20260627_pov.jpg)
+
 ### **1. Speaker 1 (Steve Tran): AgenticOps for your Cloud**
 *   **Customer Challenges:** As systems evolve from **Microservices** to **Observability**, teams eventually hit a **"Complexity Wall"**, pushing the need toward **self-healing infrastructure**. This growth leads to more tools per ops team, more engineers needed for cloud operations, and higher **MTTR** (Mean Time to Resolution) per incident.
 *   **The Solution — CloudThinker:** An **Enterprise AgenticOps Platform** built on the principle that AI agents process and react far faster than humans.

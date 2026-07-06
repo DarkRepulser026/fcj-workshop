@@ -1,6 +1,6 @@
 ---
 title: "Proposal"
-date: 2026-06-29
+date: 2026-07-06
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
@@ -33,16 +33,16 @@ The platform uses a serverless, event-driven AWS architecture. A review file upl
 ![Architecture Diagram](/fcj-workshop/images/2-Proposal/architecture-diagram.png)
 
 **AWS Services Used**
-- **Amazon S3**: Stores raw uploaded review files and processed reports (2 buckets), public access blocked, encrypted at rest.
+- **Amazon S3**: Stores raw uploaded review files and processed reports (2 buckets), public access blocked, encrypted at rest (SSE-S3, AES256).
 - **AWS Lambda**: Three functions — review-processor (validation/cleaning), sentiment-analyzer (Comprehend + OpenRouter), api-handler (REST API).
 - **Amazon DynamoDB**: Three tables (Reviews, Products, Users) with GSIs for query patterns and Streams enabled for the sentiment pipeline.
 - **Amazon Comprehend**: Baseline sentiment, key phrase, and entity extraction.
-- **Amazon API Gateway**: REST API with a Cognito authorizer and request validation.
+- **Amazon API Gateway**: REST API with a **Cognito User Pool Authorizer** attached to every method.
 - **Amazon Cognito**: User authentication (JWT) for the dashboard and API.
 - **Amazon SNS**: Email alerts on strongly negative reviews.
 - **Amazon SQS**: Dead-letter queue for failed processing events.
 - **Amazon CloudWatch**: Logs, dashboards, and alarms (Lambda errors, API latency).
-- **AWS Secrets Manager (or SSM Parameter Store, SecureString)**: Stores the OpenRouter API key; the Lambda role is granted read access to only this one secret.
+- **AWS Secrets Manager**: Stores the OpenRouter API key; the sentiment-analyzer Lambda role is granted `secretsmanager:GetSecretValue` on only this one secret. Terraform creates the secret with a placeholder value — the real key is set afterward via console or CLI, and `lifecycle.ignore_changes` keeps future `terraform apply` runs from ever overwriting it or capturing it in state history.
 - **Terraform**: Infrastructure as Code for the entire stack, enabling clean deploy/teardown.
 
 **External Service Used**
@@ -51,10 +51,35 @@ The platform uses a serverless, event-driven AWS architecture. A review file upl
 **Component Design**
 - **Ingestion**: Users upload CSV/JSON review files via presigned S3 URLs issued by the API.
 - **Processing**: review-processor Lambda validates schema, de-duplicates, and cleans text before writing to DynamoDB; failures land in an SQS dead-letter queue instead of being dropped.
-- **AI Analysis**: sentiment-analyzer Lambda runs on new DynamoDB records, calling Comprehend for baseline sentiment/key phrases/entities, and — for a sampled subset or low-confidence cases — calling the OpenRouter API (Meta Llama 3.1 8B Instruct) over HTTPS for a richer read on the review text. The OpenRouter API key is read from Secrets Manager at runtime, never stored in code or environment variables in plain text.
+- **AI Analysis**: sentiment-analyzer Lambda is triggered by **DynamoDB Streams** whenever a new review row is written (this is the trigger mechanism — the Lambda is subscribed to the stream as its event source). It calls Comprehend for baseline sentiment/key phrases/entities, and — for a sampled subset or low-confidence cases — calls the OpenRouter API (Meta Llama 3.1 8B Instruct) over HTTPS for a richer read on the review text. It then writes the result back onto the *same* review record via a separate `UpdateItem` call. **These are two distinct one-way calls, not a bidirectional link**: DynamoDB → Lambda (stream trigger) and Lambda → DynamoDB (write result) happen in opposite directions for different reasons. The OpenRouter API key is read from Secrets Manager at runtime, never stored in code or environment variables in plain text.
 - **Alerting**: SNS publishes an email notification when sentiment is strongly negative.
-- **API & Auth**: Cognito issues JWTs; API Gateway verifies every request before it reaches api-handler, which serves products, reviews, and analytics endpoints.
+- **API & Auth**: Amplify → Cognito for login (JWT issued to the browser). Every subsequent API call carries that JWT, but **the Lambda itself never validates it** — API Gateway's Cognito User Pool Authorizer checks the token first and rejects invalid/missing ones before the request ever reaches api-handler. api-handler serves products, reviews, and analytics endpoints only once the token has already been verified.
 - **Dashboard**: A React + TypeScript app shows product lists, an upload interface, and sentiment charts (pie/line/bar via Recharts).
+
+**Lambda Functions**
+
+| Lambda | Handler | Job |
+|---|---|---|
+| Review Processor | `lambda_handler_review_processor` | Read file from S3 → parse (JSON/CSV) → validate + dedupe → clean text → store to DynamoDB |
+| Sentiment Analyzer | `lambda_handler_sentiment_analyzer` | Comprehend sentiment score → optional OpenRouter deep insight → write result back to DynamoDB (`UpdateItem`) → SNS alert if negative |
+| API | `lambda_handler_api` | `GET/POST /products`, `GET /products/{id}/reviews`, `GET /products/{id}/analytics`, `POST /upload` (issues presigned URL) |
+
+**Request & Data Flow**
+
+1. End User → Route 53 (DNS resolution)
+2. Route 53 → CloudFront (CDN routes to origin)
+3. CloudFront → Amplify (serves the React dashboard)
+4. Amplify → Cognito (user logs in, gets JWT)
+5. Amplify → API Gateway (API call, JWT attached)
+6. API Gateway → API Lambda (Cognito authorizer validates the JWT first, then forwards)
+7. API Lambda → S3 (issues a presigned URL; browser PUTs the review file directly to S3)
+8. S3 → Review Processor Lambda (S3 event trigger)
+9. Review Processor Lambda → DynamoDB Reviews Table (write review, after validate/clean/dedupe)
+10. DynamoDB Stream → Sentiment Analyzer Lambda (trigger)
+11. Sentiment Analyzer Lambda → Comprehend (baseline sentiment, always runs)
+12. Sentiment Analyzer Lambda → Secrets Manager → OpenRouter API (optional deep insight, sampled/low-confidence reviews only)
+13. Sentiment Analyzer Lambda → DynamoDB Reviews Table (write sentiment back, `UpdateItem` — opposite direction from step 10)
+14. Sentiment Analyzer Lambda → SNS (alert if negative)
 
 ### 4. Technical Implementation
 
@@ -66,10 +91,10 @@ The project follows four phases:
 - **Testing & Hardening**: Run integration tests against sample data, verify IAM least-privilege and encryption settings, confirm the OpenRouter key is not exposed in logs, and finalize documentation (Days 19–21).
 
 **Technical Requirements**
-- **Backend**: Python 3.9+ for Lambda functions, boto3 for AWS SDK calls, `requests`/`urllib3` for the OpenRouter HTTPS call, Terraform for infrastructure.
+- **Backend**: Python 3.9+ for Lambda functions, boto3 for AWS SDK calls, `urllib3` for the OpenRouter HTTPS call (already a boto3/botocore dependency — no extra Lambda layer needed), Terraform for infrastructure.
 - **AI Services**: Amazon Comprehend (sentiment, key phrases, entities) enabled in the target region; an OpenRouter account with billing/spend-cap configured and an API key for Meta Llama 3.1 8B Instruct (pay-as-you-go, $0.02 / $0.03 per 1M input/output tokens).
 - **Frontend**: Node.js 18+, React + TypeScript, Recharts for charts, deployed via Amplify or S3 + CloudFront.
-- **Security**: Cognito user pool for authentication, least-privilege IAM role per Lambda function, encryption at rest (S3/DynamoDB) and in transit (TLS/HTTPS), no public S3 access, no hard-coded credentials — the OpenRouter API key lives only in Secrets Manager/SSM, fetched at runtime and never logged.
+- **Security**: Cognito user pool for authentication, least-privilege IAM role per Lambda function, encryption at rest (S3/DynamoDB) and in transit (TLS/HTTPS), no public S3 access, no hard-coded credentials — the OpenRouter API key lives only in Secrets Manager, fetched at runtime, cached per warm execution environment, and never logged.
 - **Region**: Single region (ap-southeast-1), serverless-only — no EC2 or self-managed databases. The sentiment-analyzer Lambda needs outbound internet access to reach the OpenRouter API, which works by default outside a VPC (no NAT gateway required).
 
 ### 5. Timeline & Milestones
@@ -125,7 +150,7 @@ Assuming each review averages ~300 input tokens (review text + prompt) and ~120 
 **Mitigation Strategies**
 - Use Comprehend as the default, always-on sentiment path; call the OpenRouter/Llama 3.1 8B step only on a sample or for low-confidence cases, both to keep spend predictable and to keep the pipeline functional if OpenRouter is briefly unavailable.
 - Set a spend cap / usage limit on the OpenRouter account so a runaway loop cannot generate a surprise bill.
-- Store the OpenRouter API key exclusively in AWS Secrets Manager (or SSM Parameter Store as SecureString); grant the sentiment-analyzer Lambda role read access to that one secret only; never print the key to logs or commit it to source control.
+- Store the OpenRouter API key exclusively in AWS Secrets Manager, with `lifecycle.ignore_changes` on the Terraform-managed secret so the real key (set manually post-deploy) is never overwritten or captured in state; grant the sentiment-analyzer Lambda role read access to that one secret only; never print the key to logs or commit it to source control.
 - Review each Lambda's IAM role against the specific actions/resources it actually needs; avoid wildcard permissions.
 - Document and run `terraform destroy` after each work session; set an AWS budget alarm as a backstop.
 - Use a varied, manually labeled test set spanning positive, negative, and neutral reviews.
@@ -133,7 +158,7 @@ Assuming each review averages ~300 input tokens (review text + prompt) and ~120 
 **Contingency Plans**
 - If OpenRouter is unavailable, over budget, or the model is deprecated, fall back to Comprehend-only scoring — the pipeline still functions with baseline sentiment.
 - If a Terraform apply fails partway, `terraform destroy` and redeploy from a clean state rather than patching manually.
-- If the OpenRouter API key is ever suspected compromised, rotate it in the OpenRouter dashboard and update the Secrets Manager value — no code change or redeploy required.
+- If the OpenRouter API key is ever suspected compromised, rotate it in the OpenRouter dashboard and update the Secrets Manager value directly (console or CLI) — no code change or redeploy required.
 
 ### 8. Expected Outcomes
 

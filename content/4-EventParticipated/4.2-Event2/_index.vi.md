@@ -5,6 +5,11 @@ weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
+
+![Proof](/fcj-workshop/images/4-EventParticipated/20260523_pov.jpg)
+
+![Proof2](/fcj-workshop/images/4-EventParticipated/20260523.jpg)
+
 ### **1. Diễn giả 1 (Nguyen Gia Hung): Labor Market Trends and the Power of Foundations**
 *   **Nội dung chính:**
     *   **Nghịch lý AI:** AI giúp phát triển phần mềm rẻ hơn, dẫn đến nhu cầu về phần mềm tăng bùng nổ, từ đó mở ra nhiều cơ hội việc làm mới như bảo trì code do AI tạo ra.
