@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 4.3. </b> "
 ---
 
-![Proof](/fcj-workshop/images/4-EventParticipated/20260627_pov.jpg)
+![Proof](/fcj-workshop/images/4-EventParticipated/20260627.jpg)
 
 ### **1. Diễn giả 1 (Steve Tran): AgenticOps for your Cloud**
 *   **Thách thức của khách hàng:** Khi hệ thống phát triển từ **Microservices** sang **Observability**, các đội ngũ dần chạm phải **"Bức tường phức tạp" (Complexity Wall)**, buộc phải hướng tới hạ tầng có khả năng **tự phục hồi (self-healing infrastructure)**. Sự phát triển này kéo theo nhiều công cụ hơn cho mỗi đội vận hành, cần nhiều kỹ sư hơn cho cloud operations, và **MTTR** (Mean Time to Resolution) trên mỗi sự cố cũng tăng lên.
