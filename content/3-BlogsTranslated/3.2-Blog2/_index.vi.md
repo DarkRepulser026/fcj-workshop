@@ -1,127 +1,72 @@
 ---
-title: "Blog 2"
-date: 2024-01-01
+title: "Blog 2: TỰ ĐỘNG HÓA KIỂM SOÁT CHẤT LƯỢNG DỮ LIỆU TRONG KIẾN TRÚC LAKEHOUSE VỚI AWS"
+date: 2026-06-30
 weight: 1
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# TỰ ĐỘNG HÓA KIỂM SOÁT CHẤT LƯỢNG DỮ LIỆU TRONG KIẾN TRÚC LAKEHOUSE VỚI AWS
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Trong các hệ thống dữ liệu hiện đại, dữ liệu không chỉ được sử dụng cho báo cáo mà còn phục vụ phân tích và các ứng dụng AI/ML. Khi khối lượng dữ liệu ngày càng lớn và đến từ nhiều nguồn khác nhau, việc đảm bảo **chất lượng dữ liệu (Data Quality)** trở thành một yêu cầu quan trọng để duy trì độ tin cậy của toàn bộ hệ thống. Chỉ cần một lượng nhỏ dữ liệu sai hoặc thiếu cũng có thể ảnh hưởng đến dashboard, mô hình Machine Learning hoặc quyết định kinh doanh.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Trong bài viết này, AWS giới thiệu cách kết hợp **Amazon S3 Tables**, **Apache Iceberg**, **AWS Glue Data Quality** và **Amazon SageMaker Unified Studio** để xây dựng quy trình kiểm tra chất lượng dữ liệu tự động trong kiến trúc LakeHouse.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+**Data Quality không còn là bước kiểm tra sau cùng, mà được tích hợp trực tiếp vào pipeline xử lý dữ liệu.**
 
----
+## Tự động hóa kiểm tra chất lượng dữ liệu
 
-## Hướng dẫn kiến trúc
+**AWS Glue Data Quality** cho phép định nghĩa các quy tắc kiểm tra dữ liệu và thực hiện chúng tự động mỗi khi dữ liệu mới được đưa vào hệ thống.
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+Một số quy tắc phổ biến:
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+- Giá trị không được NULL.
+- Không có dữ liệu trùng lặp.
+- Đúng kiểu dữ liệu.
+- Giá trị nằm trong khoảng cho phép.
+- Tuân thủ các quy tắc nghiệp vụ.
 
-**Kiến trúc giải pháp bây giờ như sau:**
+Việc kiểm tra được thực hiện ngay trong pipeline, giúp phát hiện các vấn đề trước khi dữ liệu được sử dụng cho báo cáo hoặc phân tích.
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+## Amazon S3 Tables và Apache Iceberg
 
----
+AWS sử dụng **Amazon S3 Tables** và **Apache Iceberg** để lưu trữ và quản lý dữ liệu theo mô hình Lakehouse.
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+**Apache Iceberg** cung cấp các tính năng như:
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+- ACID Transactions
+- Schema Evolution
+- Time Travel
 
----
+Trong khi **Amazon S3 Tables** giúp đơn giản hóa việc quản lý các bảng dữ liệu trên Amazon S3.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## AWS Glue Data Catalog
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+**AWS Glue Data Catalog** đóng vai trò là nơi quản lý metadata tập trung cho toàn bộ dữ liệu.
 
----
+Điều này cho phép các dịch vụ khác trong hệ sinh thái AWS có thể truy cập cùng một nguồn metadata, giúp việc quản lý dữ liệu trở nên thống nhất hơn.
 
-## The pub/sub hub
+## Amazon SageMaker Unified Studio
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+Sau khi dữ liệu được kiểm tra chất lượng, **SageMaker Unified Studio** hỗ trợ quá trình khám phá, phân tích và chuẩn bị dữ liệu cho các bài toán AI/ML trong cùng một môi trường làm việc.
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+## Lợi ích của việc tích hợp Data Quality vào Pipeline
 
----
+Theo cách tiếp cận của AWS, việc kiểm tra chất lượng dữ liệu được thực hiện ngay trong quá trình xử lý thay vì ở bước cuối.
 
-## Core microservice
+Điều này giúp:
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+- **Phát hiện lỗi sớm hơn.**
+- **Giảm nguy cơ** dữ liệu không chính xác được sử dụng.
+- **Nâng cao độ tin cậy** của báo cáo và mô hình AI.
+- **Đơn giản hóa** việc quản lý các quy tắc kiểm tra dữ liệu.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+## KẾT LUẬN
 
----
+Sự kết hợp giữa **Amazon S3 Tables**, **Apache Iceberg**, **AWS Glue Data Quality**, **AWS Glue Data Catalog** và **Amazon SageMaker Unified Studio** giúp xây dựng một pipeline dữ liệu đáng tin cậy hơn, đồng thời giảm công sức kiểm tra thủ công và hỗ trợ tốt cho các hệ thống phân tích cũng như AI/ML.
 
-## Front door microservice
+![Solution architecture](/fcj-workshop/images/3-BlogsTranslated/Blog2.jpg)
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+[Facebook Post (AWS Study Group)](https://www.facebook.com/photo/?fbid=2529147894181976&set=gm.2199841160780844&idorvanity=660548818043427)
 
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+[Original Post (AWS Big Data Blog)](https://aws.amazon.com/vi/blogs/big-data/accelerate-your-data-quality-journey-for-lakehouse-architecture-with-amazon-sagemaker-apache-iceberg-on-aws-amazon-s3-tables-and-aws-glue-data-quality/)

@@ -9,8 +9,8 @@ pre: " <b> 3. </b> "
 ###  [Blog 1 - Getting started with healthcare data lakes: Using microservices](3.1-Blog1/)
 Bài blog này giới thiệu cách thiết lập kiến trúc **failover tự động giữa nhiều Region** cho các ứng dụng hướng sự kiện (event-driven) trên nền tảng AWS. Bạn sẽ khám phá cách kết hợp **Amazon EventBridge, API Gateway và Route 53** để đảm bảo tính sẵn sàng cao (HA) và khả năng phục hồi sau thảm họa (DR) một cách hiệu quả. 
 
-###  [Blog 2 - ...](3.2-Blog2/)
-loren ipsum
+###  [Blog 2 - Tự động hóa kiểm soát chất lượng dữ liệu trong kiến trúc Lakehouse với AWS](3.2-Blog2/)
+Bài viết này giới thiệu cách xây dựng **quy trình kiểm tra chất lượng dữ liệu tự động** cho kiến trúc Lakehouse bằng các dịch vụ của AWS. Bạn sẽ tìm hiểu cách kết hợp **Amazon S3 Tables, Apache Iceberg, AWS Glue Data Quality, AWS Glue Data Catalog và Amazon SageMaker Unified Studio** để kiểm tra dữ liệu ngay trong quá trình nạp dữ liệu, phát hiện lỗi trước khi ảnh hưởng đến dashboard, mô hình ML hoặc các quyết định kinh doanh.
 
 ###  [Blog 3 - ...](3.3-Blog3/)
 loren ipsum
