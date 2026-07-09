@@ -106,7 +106,7 @@ The project follows four phases:
 
 ### 6. Budget Estimation
 
-Because this is a study/demo project rather than a production deployment, the estimate below reflects both a demo-scale reality check and a reference point at higher (50,000 reviews/month) volume to show the architecture scales without redesign.
+Because this is a study/demo project rather than a production deployment, the estimate below reflects both a demo-scale reality check and a reference point at higher (50,000 reviews/month) volume to show the architecture scales without redesign. The reference-scale figures are drawn directly from an [AWS Pricing Calculator estimate](https://calculator.aws/#/estimate?id=a72fc71949ca17460585fc2e0dd16056631c87fd) built against this architecture's actual services (ap-southeast-1 / Singapore pricing).
 
 **At demo scale (a few hundred reviews, tested over a few days)**
 - Nearly every AWS service below falls within AWS Free Tier.
@@ -122,20 +122,25 @@ Assuming each review averages ~300 input tokens (review text + prompt) and ~120 
 
 - Input: 50,000 × 300 tokens = 15M tokens × $0.02/1M = **$0.30**
 - Output: 50,000 × 120 tokens = 6M tokens × $0.03/1M = **$0.18**
-- **OpenRouter total ≈ $0.50/month even at full volume**
+- **OpenRouter total ≈ $0.50/month even at full volume** (priced separately — OpenRouter is not an AWS service and doesn't appear in the AWS Pricing Calculator)
 
 | Service | Monthly Cost (USD) | Notes |
 |---|---|---|
-| AWS Lambda | $0.05 | ~100K invocations/month, mostly Free Tier |
-| Amazon DynamoDB | $75.00 | Pay-per-request: ~50K writes, ~200K reads |
-| Amazon S3 | $0.05 | Storage + API calls |
-| Amazon API Gateway | $3.50 | ~10K requests/month |
-| Amazon Comprehend | $25.00 | 50K texts, ~100 units/review |
-| OpenRouter — Meta Llama 3.1 8B Instruct | ≈ $0.50 | Pay-as-you-go, $0.02 / $0.03 per 1M input/output tokens; ~50K reviews at ~300 in / ~120 out tokens each |
-| Amazon Cognito | Free | Under 50K monthly active users |
-| Amazon CloudWatch | $5.00 | Logs, dashboards, alarms |
-| Amazon SNS | $0.50 | Alert notifications |
-| **Total** | **≈ $109.60/month** | Still notably lower than the original Bedrock-based estimate — Llama 3.1 8B's small size keeps its token cost well under Bedrock's ~$15/month line item, even with no free tier |
+| AWS Lambda (3 functions) | $0.00 | ~110K invocations/month combined, fully covered by the 1M free requests + 400K GB-second Free Tier |
+| Amazon DynamoDB (on-demand + Streams) | $0.37 | ~100K writes, ~200K reads, 1 GB storage; Streams reads via Lambda triggers are not billed |
+| Amazon S3 (Standard + Data Transfer) | $0.62 | 2 GB storage, ~250K requests, 2 GB in/out transfer |
+| Amazon API Gateway (REST) | ~$0.04 | ~10K requests/month |
+| Amazon Comprehend (Sentiment + Key Phrases) | $30.00 | 50K reviews × 2 API calls, 250 chars avg (rounds to 3-unit/300-char minimum per call) |
+| AWS Secrets Manager | $0.65 | 1 secret (OpenRouter API key), 30-day duration, ~50K GetSecretValue calls (conservative; warm-Lambda caching means actual calls are far fewer) |
+| Amazon CloudWatch | $5.62 | Metrics, 3 GB logs ingested, 1 dashboard, 5 alarms |
+| Amazon SNS (Standard topics) | $0.00 | ~500 publishes + email notifications/month |
+| Amazon Cognito | $0.01 | 25 MAU, Lite tier — well under the 10,000 MAU free tier |
+| Amazon Route 53 | $0.54 | 1 hosted zone (flat monthly fee) + negligible query volume |
+| Amazon CloudFront | $0.00 | Free Plan (1 TB / 10M requests) — usage is a small fraction of the allowance |
+| AWS WAF | $7.06 | 1 Web ACL, 1 custom rule, 1 AWS Managed Rule Group, ~100–200K requests inspected |
+| AWS Amplify Hosting | $0.97 | React SPA build + hosting, no SSR |
+| OpenRouter — Meta Llama 3.1 8B Instruct | ≈ $0.50 | Pay-as-you-go, outside AWS billing; $0.02 / $0.03 per 1M input/output tokens |
+| **Total** | **≈ $46.34/month** | AWS services: $45.84/month (calculator) + OpenRouter: ≈$0.50/month. Comprehend and WAF are the two dominant line items — not DynamoDB, contrary to the original manual estimate |
 
 ### 7. Risk Assessment
 

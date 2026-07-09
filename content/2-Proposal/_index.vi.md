@@ -79,38 +79,43 @@ Dự án thực hiện theo bốn giai đoạn:
 - **Tuần 2**: Pipeline phân tích cảm xúc AI hoạt động (Comprehend + gọi tùy chọn đến OpenRouter/Llama 3.1 8B); cảnh báo SNS được xác minh; API có xác thực được triển khai.
 - **Tuần 3**: Dashboard React được xây dựng và triển khai; kiểm thử tích hợp toàn diện; tự đánh giá bảo mật (bao gồm cách xử lý API key); hoàn thiện tài liệu và hướng dẫn huỷ tài nguyên.
 
-### 6. Dự Toán Chi Phí
+### 6. Ước tính Ngân sách
 
-Vì đây là dự án học tập/demo chứ không phải triển khai production, dự toán dưới đây phản ánh cả mức chi phí thực tế ở quy mô demo lẫn một mốc tham chiếu ở quy mô lớn hơn (50.000 đánh giá/tháng) để minh họa khả năng mở rộng của kiến trúc mà không cần thiết kế lại.
+Vì đây là dự án học tập/demo chứ không phải triển khai sản xuất, ước tính dưới đây phản ánh cả một kiểm tra thực tế ở quy mô demo lẫn một mốc tham chiếu ở quy mô cao hơn (50.000 review/tháng) để cho thấy kiến trúc có thể mở rộng mà không cần thiết kế lại. Các số liệu ở quy mô tham chiếu được lấy trực tiếp từ [ước tính AWS Pricing Calculator](https://calculator.aws/#/estimate?id=a72fc71949ca17460585fc2e0dd16056631c87fd) được xây dựng dựa trên các dịch vụ thực tế của kiến trúc này (giá theo khu vực ap-southeast-1 / Singapore).
 
-**Ở quy mô demo (vài trăm đánh giá, kiểm thử trong vài ngày)**
-- Hầu hết các dịch vụ AWS dưới đây nằm trong AWS Free Tier.
-- Meta Llama 3.1 8B Instruct trên OpenRouter là model tính phí theo mức dùng — $0.02 trên mỗi 1 triệu token đầu vào và $0.03 trên mỗi 1 triệu token đầu ra, không có gói miễn phí. Ở quy mô demo, vài trăm đoạn văn bản đánh giá ngắn cộng lại vẫn còn rất xa mốc 1 triệu token, nên chi phí thực tế chỉ là một phần rất nhỏ của một xu (gần như làm tròn về $0.00–$0.05 trên hóa đơn OpenRouter).
-- Chi phí sử dụng Comprehend tối đa chỉ vài xu đến vài đô la cho khối lượng kiểm thử.
+**Ở quy mô demo (vài trăm review)**
+- Gần như toàn bộ các dịch vụ AWS bên dưới đều nằm trong AWS Free Tier.
+- Meta Llama 3.1 8B Instruct trên OpenRouter là mô hình trả phí theo mức sử dụng (pay-as-you-go) — 0,02 USD cho mỗi 1 triệu token đầu vào và 0,03 USD cho mỗi 1 triệu token đầu ra, không có gói miễn phí. Ở quy mô demo, vài trăm đoạn văn bản review ngắn tổng cộng chưa tới 1 triệu token, nên chi phí thực tế chỉ là một phần rất nhỏ của một cent (thực tế làm tròn về khoảng 0,00–0,05 USD trên hóa đơn OpenRouter).
+- Chi phí sử dụng Comprehend tối đa chỉ vài cent đến vài đô la cho khối lượng kiểm thử.
 - Chạy `terraform destroy` giữa các phiên làm việc giúp tránh phát sinh chi phí DynamoDB/CloudWatch liên tục.
-- Đặt giới hạn chi tiêu (spend cap) trên tài khoản OpenRouter như một lớp phòng ngừa, vì đây là dịch vụ tính phí theo mức dùng và không có hạn mức miễn phí đi kèm.
-- **Chi phí ước tính: dưới $2 cho toàn bộ giai đoạn học tập/demo.**
+- Thiết lập giới hạn chi tiêu / hạn mức sử dụng trên tài khoản OpenRouter như một biện pháp an toàn, vì dịch vụ này tính phí theo mức sử dụng và không có hạn mức miễn phí tích hợp sẵn.
+- **Chi phí ước tính: dưới 2 USD cho toàn bộ giai đoạn học tập/demo.**
 
-**Tham chiếu: ở quy mô 50.000 đánh giá/tháng (chỉ để minh họa khả năng mở rộng)**
+**Tham chiếu: ở quy mô 50.000 review/tháng**
 
-Giả sử mỗi đánh giá trung bình dùng ~300 token đầu vào (nội dung đánh giá + prompt) và ~120 token đầu ra khi bước làm giàu bằng Llama chạy cho mọi đánh giá (đây là mức ước lượng cao — nếu chỉ lấy mẫu một phần thì chi phí còn thấp hơn nữa):
+Giả định mỗi review trung bình tốn ~300 token đầu vào (nội dung review + prompt) và ~120 token đầu ra khi bước làm giàu dữ liệu bằng Llama chạy trên mọi review (một giới hạn trên mang tính thận trọng — nếu chỉ lấy mẫu một phần thì chi phí sẽ còn thấp hơn nữa):
 
-- Đầu vào: 50.000 × 300 token = 15 triệu token × $0.02/1M = **$0.30**
-- Đầu ra: 50.000 × 120 token = 6 triệu token × $0.03/1M = **$0.18**
-- **Tổng chi phí OpenRouter ≈ $0.50/tháng ngay cả khi dùng cho toàn bộ khối lượng**
+- Đầu vào: 50.000 × 300 token = 15 triệu token × 0,02 USD/1M = **0,30 USD**
+- Đầu ra: 50.000 × 120 token = 6 triệu token × 0,03 USD/1M = **0,18 USD**
+- **Tổng chi phí OpenRouter ≈ 0,50 USD/tháng ngay cả ở toàn bộ khối lượng** (được tính riêng — OpenRouter không phải là dịch vụ AWS và không xuất hiện trong AWS Pricing Calculator)
 
 | Dịch vụ | Chi phí hàng tháng (USD) | Ghi chú |
 |---|---|---|
-| AWS Lambda | $0.05 | ~100K lượt gọi/tháng, phần lớn trong Free Tier |
-| Amazon DynamoDB | $75.00 | Pay-per-request: ~50K ghi, ~200K đọc |
-| Amazon S3 | $0.05 | Lưu trữ + lượt gọi API |
-| Amazon API Gateway | $3.50 | ~10K request/tháng |
-| Amazon Comprehend | $25.00 | 50K văn bản, ~100 unit/đánh giá |
-| OpenRouter — Meta Llama 3.1 8B Instruct | ≈ $0.50 | Tính phí theo mức dùng, $0.02 / $0.03 trên mỗi 1 triệu token đầu vào/đầu ra; ~50K đánh giá với ~300 token vào / ~120 token ra mỗi đánh giá |
-| Amazon Cognito | Miễn phí | Dưới 50K người dùng hoạt động/tháng |
-| Amazon CloudWatch | $5.00 | Logs, dashboard, cảnh báo |
-| Amazon SNS | $0.50 | Thông báo cảnh báo |
-| **Tổng** | **≈ $109.60/tháng** | Vẫn thấp hơn đáng kể so với dự toán ban đầu dùng Bedrock — do kích thước nhỏ của Llama 3.1 8B, chi phí tính theo token vẫn thấp hơn nhiều so với khoản ~$15/tháng của Bedrock, dù không có gói miễn phí |
+| AWS Lambda (3 hàm) | 0,00 | ~110K lượt gọi/tháng gộp lại, được bao phủ hoàn toàn bởi Free Tier (1 triệu request miễn phí + 400K GB-giây) |
+| Amazon DynamoDB (on-demand + Streams) | 0,37 | ~100K lượt ghi, ~200K lượt đọc, 1 GB lưu trữ; các lượt đọc qua Streams do Lambda trigger không bị tính phí |
+| Amazon S3 (Standard + Data Transfer) | 0,62 | 2 GB lưu trữ, ~250K request, 2 GB truyền dữ liệu vào/ra |
+| Amazon API Gateway (REST) | ~0,04 | ~10K request/tháng |
+| Amazon Comprehend (Sentiment + Key Phrases) | 30,00 | 50K review × 2 lượt gọi API, trung bình 250 ký tự (làm tròn lên mức tối thiểu 3 đơn vị/300 ký tự mỗi lượt gọi) |
+| AWS Secrets Manager | 0,65 | 1 secret (API key của OpenRouter), thời hạn 30 ngày, ~50K lượt gọi GetSecretValue (con số thận trọng; nhờ cơ chế cache khi Lambda "warm" nên số lượt gọi thực tế thấp hơn nhiều) |
+| Amazon CloudWatch | 5,62 | Metrics, 3 GB log được ingest, 1 dashboard, 5 alarm |
+| Amazon SNS (Standard topics) | 0,00 | ~500 lượt publish + thông báo email/tháng |
+| Amazon Cognito | 0,01 | 25 MAU, gói Lite — vẫn nằm sâu trong hạn mức miễn phí 10.000 MAU |
+| Amazon Route 53 | 0,54 | 1 hosted zone (phí cố định hàng tháng) + lượng truy vấn không đáng kể |
+| Amazon CloudFront | 0,00 | Gói Free (1 TB / 10 triệu request) — mức sử dụng chỉ chiếm một phần rất nhỏ trong hạn mức |
+| AWS WAF | 7,06 | 1 Web ACL, 1 rule tùy chỉnh, 1 AWS Managed Rule Group, ~100–200K request được kiểm tra |
+| AWS Amplify Hosting | 0,97 | Build và hosting cho React SPA, không dùng SSR |
+| OpenRouter — Meta Llama 3.1 8B Instruct | ≈ 0,50 | Trả phí theo mức sử dụng, nằm ngoài hóa đơn AWS; 0,02 / 0,03 USD cho mỗi 1 triệu token đầu vào/đầu ra |
+| **Tổng cộng** | **≈ 46,34 USD/tháng** | Các dịch vụ AWS: 45,84 USD/tháng (theo calculator) + OpenRouter: ≈0,50 USD/tháng. Comprehend và WAF mới là hai khoản chi phí chính — không phải DynamoDB như ước tính thủ công ban đầu |
 
 ### 7. Đánh Giá Rủi Ro
 
