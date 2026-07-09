@@ -1,12 +1,10 @@
 ---
-title: "Blog 2: AUTOMATING DATA QUALITY CONTROL IN A LAKEHOUSE ARCHITECTURE WITH AWS"
+title: "Blog 2: Automating data quality control in a Lakehouse architecture with AWS"
 date: 2026-06-30
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-
-# AUTOMATING DATA QUALITY CONTROL IN A LAKEHOUSE ARCHITECTURE WITH AWS
 
 In modern data systems, data is no longer used just for reporting — it also powers analytics and AI/ML applications. As data volumes grow larger and come from an increasing number of sources, ensuring **data quality** becomes essential to maintaining the reliability of the entire system. Even a small amount of incorrect or missing data can affect dashboards, Machine Learning models, or business decisions.
 

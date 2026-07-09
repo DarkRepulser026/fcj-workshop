@@ -1,12 +1,10 @@
 ---
 title: "Blog 2: TỰ ĐỘNG HÓA KIỂM SOÁT CHẤT LƯỢNG DỮ LIỆU TRONG KIẾN TRÚC LAKEHOUSE VỚI AWS"
 date: 2026-06-30
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-
-# TỰ ĐỘNG HÓA KIỂM SOÁT CHẤT LƯỢNG DỮ LIỆU TRONG KIẾN TRÚC LAKEHOUSE VỚI AWS
 
 Trong các hệ thống dữ liệu hiện đại, dữ liệu không chỉ được sử dụng cho báo cáo mà còn phục vụ phân tích và các ứng dụng AI/ML. Khi khối lượng dữ liệu ngày càng lớn và đến từ nhiều nguồn khác nhau, việc đảm bảo **chất lượng dữ liệu (Data Quality)** trở thành một yêu cầu quan trọng để duy trì độ tin cậy của toàn bộ hệ thống. Chỉ cần một lượng nhỏ dữ liệu sai hoặc thiếu cũng có thể ảnh hưởng đến dashboard, mô hình Machine Learning hoặc quyết định kinh doanh.
 
