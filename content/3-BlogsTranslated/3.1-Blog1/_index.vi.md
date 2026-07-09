@@ -27,3 +27,7 @@ Bài blog mới từ AWS Compute Blog chia sẻ cách xây dựng kiến trúc f
 Route 53 health-based failover là một công cụ mạnh mẽ mang đến sự linh hoạt tối đa, hỗ trợ tốt cả hai tình huống: bảo trì hệ thống có chủ đích hoặc region bị downtime ngoài ý muốn, phục vụ tốt cho các ứng dụng enterprise.
 
 Những ai đang xây dựng kiến trúc event-driven yêu cầu tính sẵn sàng cao hoặc tìm giải pháp HA/DR đa vùng trên AWS có thể tham khảo hướng tiếp cận này.
+
+[Facebook Post](https://www.facebook.com/photo?fbid=2216858689065550&set=gm.2174291026669191&idorvanity=660548818043427)
+
+[Original Post](https://aws.amazon.com/blogs/compute/multi-region-event-driven-failover-architecture-with-amazon-eventbridge-and-route-53/)
