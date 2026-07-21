@@ -43,11 +43,12 @@ After creation:
 2. Enable **DynamoDB Streams** from the **Exports and streams** tab.
 3. Choose **New image** as the stream view type.
 4. Go to the **Backups** tab and enable **Point-in-time recovery**.
-5. Create a GSI named `SentimentIndex`.
-6. Use `ProductID` as the partition key and `Sentiment` as the sort key.
-7. Project only `ReviewText`, `Rating`, `CreatedAt`, `KeyPhrases`, and `UserID`.
-8. **Additive update (no existing data modification needed)**: When putting new items, include the `AnalysisID` attribute (as a regular attribute, not part of the key).
-9. **Create GSI for analysis queries**: Create a Global Secondary Index named `AnalysisIndex` on the `Reviews` table:
+4. Go to the **Indexes** tab.
+5. Create a Global Secondary Index named `SentimentIndex` on the `Reviews` table:
+   - Partition key: `ProductID` (String)
+   - Sort key: `Sentiment`
+   - Projected attributes: `ReviewText`, `Rating`, `CreatedAt`, `KeyPhrases`, and `UserID`
+6. Create a Global Secondary Index named `AnalysisIndex` on the `Reviews` table:
    - Partition key: `AnalysisID` (String)
    - Sort key: `Leave blank` (or use `ReviewID` if sorting within analysis is needed)
    - Projected attributes: `KEYS_ONLY` (or `ALL` if needed for your queries)

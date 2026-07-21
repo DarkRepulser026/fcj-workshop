@@ -10,6 +10,8 @@ pre: " <b> 5.1. </b> "
 
 ReviewSentinal is a serverless AWS application that ingests product reviews, stores them in DynamoDB, scores them with Amazon Comprehend, and exposes the results through API Gateway and Cognito-protected endpoints.
 
+![Architecture Diagram](/fcj-workshop/images/2-Proposal/architecture-diagram.png)
+
 #### What gets deployed
 
 + **Storage and events**: S3 for raw uploads, DynamoDB for review and product records, SQS for failures, and SES for alerts.

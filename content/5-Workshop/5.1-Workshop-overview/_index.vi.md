@@ -10,6 +10,8 @@ pre: " <b> 5.1. </b> "
 
 ReviewSentinal là một ứng dụng AWS serverless nhận dữ liệu đánh giá sản phẩm, lưu vào DynamoDB, chấm điểm cảm xúc bằng Amazon Comprehend, và hiển thị kết quả qua API Gateway cùng các endpoint được bảo vệ bởi Cognito.
 
+![Architecture Diagram](/fcj-workshop/images/2-Proposal/architecture-diagram.png)
+
 #### Những gì được triển khai
 
 + **Lưu trữ và sự kiện**: S3 cho file tải lên thô, DynamoDB cho dữ liệu review và sản phẩm, SQS cho lỗi, SES cho cảnh báo.

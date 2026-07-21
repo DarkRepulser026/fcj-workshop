@@ -68,11 +68,28 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 5. Create the top-level `/upload` and `/analyze` resources.
 
 ### 6. Add methods and integrations
+```
+/
+└── products                       (GET, POST)
+    └── {id}                       (DELETE)
+        ├── reviews                 (GET)
+        │   └── {review_id}         (DELETE)
+        └── analytics               (GET)
+/upload                            (POST)
+/analyze                           (POST)
+```
 
-1. Add the required methods for each resource listed in the workshop.
-2. Use Lambda proxy integration.
-3. Point every method at `review-sentiment-analyzer-api`.
-4. Keep the authorization on the product, upload, and analysis routes set to `cognito-authorizer`.
+For **every** method (`GET /products`, `POST /products`, `DELETE /products/{id}`, `GET /products/{id}/reviews`, `DELETE /products/{id}/reviews/{review_id}`, `GET /products/{id}/analytics`, `POST /upload`, `POST /analyze`):
+1. On the resource, **Create method**
+2. Method type: as above
+3. Integration type: **Lambda function**
+4. **Lambda proxy integration**: toggle **ON**
+5. Response transfer mode: **Buffered**
+6. Lambda function: `review-sentiment-analyzer-api`
+7. Leave Method request settings (query params/headers/body) empty
+8. **Create method**
+9. Open the method afterward → find **Authorization** under its method request settings → set to `cognito-authorizer`
+
 
 ### 7. Configure CORS
 

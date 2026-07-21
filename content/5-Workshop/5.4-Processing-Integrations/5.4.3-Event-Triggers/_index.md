@@ -34,6 +34,13 @@ Wire the storage and database events into the Lambda functions so the pipeline r
 4. Choose the `Reviews` table.
 5. Keep the batch size at `100` and the starting position at **Latest**.
 6. Add the filter criteria so the Lambda only fires on `INSERT` events where `ProcessingStatus` is `PENDING`.
+```json
+[
+  {
+    "Pattern": "{  \"eventName\": [\"INSERT\"],  \"dynamodb\": {    \"NewImage\": {      \"ProcessingStatus\": {        \"S\": [\"PENDING\"]      }    }  }}"
+  }
+]
+```
 7. Enable split batch on error.
 8. Add the trigger.
 

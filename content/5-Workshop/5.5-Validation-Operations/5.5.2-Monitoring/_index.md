@@ -30,22 +30,27 @@ Add the observability layer that keeps the deployment honest. This page groups t
 1. Open **CloudWatch** → **Dashboards**.
 2. Choose **Create dashboard**.
 3. Name it `ReviewAnalyzerDashboard`.
-4. Add a line widget for the three Lambda functions.
+4. Add a Metrics -> Metrics console -> Line widget for the three Lambda functions.
 5. Include `Invocations`, `Errors`, and `Duration` metrics.
-6. Add a second widget for DynamoDB table metrics.
+6. Add a second widget for DynamoDB (Metrics -> Metrics console ->) Data table metrics.
 7. Include `ConsumedWriteCapacityUnits` for `Reviews`.
-8. Add a log query widget that counts error messages over time.
+8. Add a (Logs ->) Line query widget that counts error messages over time.
+```
+SOURCE logGroups(namePrefix: [], class: "STANDARD") START=-604800s END=0s |
+filter @message like /(?i)error/ 
+| stats count(*) as errorCount by bin(5m)
+```
 9. Save the dashboard.
 
 ### 2. Create the per-function error alarms
 
 1. Open **CloudWatch** → **Alarms** → **All alarms**.
 2. Create an alarm for the processor Lambda errors.
-3. Repeat for the analyzer Lambda.
-4. Repeat for the API Lambda.
-5. Scope each alarm to the specific function name.
-6. Use a 5-minute period and a threshold of more than 5 errors.
-7. **Send notifications to your verified SES email address** (replace SNS topic with direct SES email).
+3. Scope each alarm to the specific function name.
+4. Use a 5-minute period and a threshold of more than 5 errors.
+5. Send notifications to your verified SNS email address. (Create new topic and use that topic for other alarms)
+6. Repeat for the analyzer Lambda.
+7. Repeat for the API Lambda.
 
 ### 3. Create the API latency alarm
 
@@ -53,7 +58,7 @@ Add the observability layer that keeps the deployment honest. This page groups t
 2. Choose the `Duration` metric.
 3. Use an average period of 5 minutes.
 4. Trigger the alarm if duration is greater than 5000 ms.
-5. **Send the notification to your verified SES email address** (replace SNS topic with direct SES email).
+5. Send notifications to your verified SNS email address.
 
 ### 4. Create budget alerts
 

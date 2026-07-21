@@ -47,8 +47,7 @@ Create the three Lambda handlers that power the ingestion, analysis, and API flo
 4. Set the handler to `lambda_function.lambda_handler_sentiment_analyzer`.
 5. Set timeout to 2 minutes and memory to 1024 MB.
 6. Add `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `OPENROUTER_MODEL`, and `OPENROUTER_API_KEY_SECRET_NAME`.
-7. Configure the same DLQ.
-8. **Important**: This function now uses Amazon SES for user notifications instead of SNS. No SNS topic ARN is needed.
+7. Configure the asynchronous invocation DLQ to use `lambda-dlq`.
 
 ### 3. Create the API function
 
@@ -58,9 +57,9 @@ Create the three Lambda handlers that power the ingestion, analysis, and API flo
 4. Set the handler to `lambda_function.lambda_handler_api`.
 5. Set timeout to 30 seconds and memory to 256 MB.
 6. Add `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `USERS_TABLE`, `RAW_BUCKET`, and `CORS_ALLOWED_ORIGIN`.
-7. Configure the same DLQ.
+7. Configure the asynchronous invocation DLQ to use `lambda-dlq`.
 
-### Analysis completion flow (updated)
+### Analysis completion flow
 
 The analyzer function now follows this flow when processing reviews:
 1. Process all review records from the DynamoDB stream batch
