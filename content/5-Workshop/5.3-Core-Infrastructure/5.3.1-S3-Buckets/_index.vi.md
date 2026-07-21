@@ -36,7 +36,18 @@ Tạo bucket upload thô trước. Ứng dụng upload file review trực tiếp
 
 1. Mở tab **Permissions** của bucket.
 2. Chỉnh **Cross-origin resource sharing (CORS)**.
-3. Dán chính sách CORS cho môi trường local từ hướng dẫn triển khai.
+3. Dán chính sách CORS sau đây cho môi trường local:
+```json
+[
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedOrigins": ["http://localhost:3000"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3000
+  }
+]
+```
 4. Lưu lại.
 
 ### Ghi chú

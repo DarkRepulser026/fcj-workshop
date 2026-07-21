@@ -13,7 +13,6 @@ Wire the storage and database events into the Lambda functions so the pipeline r
 
 - S3 object-created event for the processor Lambda
 - DynamoDB Streams trigger for the analyzer Lambda
-- Optional daily EventBridge schedule for the API Lambda
 
 ## Step-by-step
 
@@ -38,21 +37,18 @@ Wire the storage and database events into the Lambda functions so the pipeline r
 7. Enable split batch on error.
 8. Add the trigger.
 
-### 3. Add the optional EventBridge schedule
-
-1. Open the `review-sentiment-analyzer-api` Lambda.
-2. Choose **Add trigger**.
-3. Select **EventBridge (CloudWatch Events)**.
-4. Create a new rule named `review-sentiment-analyzer-daily-digest`.
-5. Use the schedule expression `rate(1 day)`.
-6. Add the trigger.
-
 ### Notes
 
 1. The S3 trigger starts the ingestion path.
-2. The DynamoDB stream trigger must filter out updates from the analyzer itself.
-3. The EventBridge rule is optional, but it is part of the full deployment flow.
+2. The DynamoDB stream trigger must filter out updates from the analyzer itself. The analyzer function now:
+   - Processes incoming review records
+   - Updates each review with sentiment analysis results
+   - Updates the corresponding analysis record counters (ProcessedReviews, Positive/Neutral/Negative)
+   - When all reviews for an analysis are processed, it:
+     * Updates the analysis status to COMPLETED
+     * Sets the CompletedAt timestamp
+     * Sends a completion email via Amazon SES to the user's email address
 
 ### Expected result
 
-The ingestion path should start from S3, continue through DynamoDB Streams, and optionally feed the daily digest flow through EventBridge.
+The ingestion path starts from S3 and continues through DynamoDB Streams. The analyzer function will now also update analysis records and send completion emails via SES when an analysis finishes processing.

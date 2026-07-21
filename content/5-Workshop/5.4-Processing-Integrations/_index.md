@@ -12,9 +12,9 @@ In this section you create the IAM roles, Lambda functions, and event triggers t
 
 #### Content
 
-1. [IAM roles](5.04.1-iam-roles/)
-2. [Lambda functions](5.04.2-lambda-functions/)
-3. [Event triggers](5.04.3-event-triggers/)
+1. [IAM roles](5.4.1-iam-roles/)
+2. [Lambda functions](5.4.2-lambda-functions/)
+3. [Event triggers](5.4.3-event-triggers/)
 
 #### Build the processing layer
 

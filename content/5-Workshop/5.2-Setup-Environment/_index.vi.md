@@ -8,7 +8,7 @@ pre: " <b> 5.2. </b> "
 
 #### Bạn cần chuẩn bị
 
-+ Một tài khoản AWS có quyền tạo các tài nguyên S3, DynamoDB, Lambda, IAM, Cognito, API Gateway, CloudWatch, SNS, SQS và Secrets Manager.
++ Một tài khoản AWS có quyền tạo các tài nguyên S3, DynamoDB, Lambda, IAM, Cognito, API Gateway, CloudWatch, SES, SQS và Secrets Manager.
 + Một region thống nhất cho toàn bộ bài triển khai. Hướng dẫn này dùng `ap-southeast-1`.
 + Mã nguồn ReviewSentinal và Account ID của tài khoản AWS.
 + Máy local có trình duyệt, cùng Node.js nếu bạn định build frontend trên máy.

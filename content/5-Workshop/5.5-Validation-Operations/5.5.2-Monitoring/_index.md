@@ -45,7 +45,7 @@ Add the observability layer that keeps the deployment honest. This page groups t
 4. Repeat for the API Lambda.
 5. Scope each alarm to the specific function name.
 6. Use a 5-minute period and a threshold of more than 5 errors.
-7. Send notifications to the `sentiment-alerts` SNS topic.
+7. **Send notifications to your verified SES email address** (replace SNS topic with direct SES email).
 
 ### 3. Create the API latency alarm
 
@@ -53,7 +53,7 @@ Add the observability layer that keeps the deployment honest. This page groups t
 2. Choose the `Duration` metric.
 3. Use an average period of 5 minutes.
 4. Trigger the alarm if duration is greater than 5000 ms.
-5. Send the notification to the same SNS topic.
+5. **Send the notification to your verified SES email address** (replace SNS topic with direct SES email).
 
 ### 4. Create budget alerts
 
@@ -66,9 +66,9 @@ Add the observability layer that keeps the deployment honest. This page groups t
 ### Notes
 
 1. Scope the Lambda alarms to a specific function, not the generic service metric.
-2. Use the SNS topic for alarm notifications.
+2. **Use direct SES email notifications instead of SNS topic for alarm notifications**.
 3. Keep the widgets simple so the dashboard remains readable during validation.
 
 ### Expected result
 
-You should be able to open the dashboard and confirm that the stack is healthy before running the final checks.
+You should be able to open the dashboard and confirm that the stack is healthy before running the final checks. Alarm notifications will now come directly from SES instead of through SNS.

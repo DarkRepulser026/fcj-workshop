@@ -1,5 +1,5 @@
 ---
-title: "5.03.3 Messaging và secret"
+title: "5.3.3 Messaging và secret"
 weight: 3
 ---
 
@@ -7,7 +7,7 @@ weight: 3
 
 ## Tổng quan
 
-Tạo dead-letter queue, SNS topic cảnh báo, và secret tùy chọn mà các Lambda sẽ dùng ở các bước sau.
+Tạo dead-letter queue, cấu hình Amazon SES để gửi thông báo người dùng, và thiết lập secret mà các Lambda sẽ dùng ở các bước sau.
 
 ### SQS dead-letter queue
 
@@ -19,16 +19,13 @@ Tạo dead-letter queue, SNS topic cảnh báo, và secret tùy chọn mà các 
 6. Tạo queue.
 7. Copy ARN của queue từ trang chi tiết.
 
-### SNS alert topic
+### Amazon SES cho thông báo người dùng
 
-1. Mở SNS và vào **Topics** → **Create topic**.
-2. Chọn **Standard**.
-3. Đặt tên topic là `sentiment-alerts`.
-4. Giữ encryption bằng key AWS managed mặc định của SNS.
-5. Tạo topic.
-6. Tạo email subscription bằng chính email của bạn.
-7. Xác nhận subscription từ inbox.
-8. Copy ARN của topic.
+1. Truy cập **Amazon SES → Verified identities → Create identity**
+2. Loại kiểu danh tính: **Địa chỉ email**
+3. Email: `noreply@yourdomain.com` (hoặc Gmail của bạn nếu bạn đang trong SES sandbox)
+4. Xác minh địa chỉ email
+5. *(Chỉ dành cho sandbox)* Xác minh chính địa chỉ email nhận của bạn
 
 ### Secrets Manager secret
 
@@ -41,12 +38,11 @@ Tạo dead-letter queue, SNS topic cảnh báo, và secret tùy chọn mà các 
 7. Bỏ rotation và lưu lại.
 8. Copy ARN của secret.
 
-### Ghi chú
-
-- Giữ secret dạng plain text vì Lambda đọc raw string trực tiếp.
-- DLQ được các Lambda dùng cho xử lý lỗi bất đồng bộ.
-- Ở bước kế tiếp bạn sẽ paste các ARN này vào IAM policy.
-
 ### Kết quả mong đợi
 
-Bạn phải có ARN của SQS DLQ, ARN của SNS topic với subscription email đã xác nhận, và ARN của Secrets Manager secret để dùng cho IAM role.
+Bạn nên có:
+- ARN của SQS DLQ
+- Địa chỉ email SES đã xác minh làm người gửi
+- ARN của Secrets Manager secret
+
+Các ARN và chi tiết cấu hình này sẽ được sử dụng trong chính sách IAM và biến môi trường Lambda trong các phần sau.

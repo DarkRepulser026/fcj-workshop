@@ -1,5 +1,5 @@
 ---
-title: "5.05.5 Sample test data"
+title: "5.5.5 Sample test data"
 weight: 5
 ---
 
@@ -7,7 +7,7 @@ weight: 5
 
 ## Overview
 
-Use the sample review data from the guide to verify the full pipeline.
+Use the sample review data provided in the workshop to verify the full pipeline.
 
 ### What to test
 
@@ -20,7 +20,7 @@ Use the sample review data from the guide to verify the full pipeline.
 ### Notes
 
 1. Keep the sample file small so it is easy to upload and trace.
-2. Use the exact sample format from the deployment guide.
+2. Use the exact sample format provided in the workshop.
 
 ### Expected result
 

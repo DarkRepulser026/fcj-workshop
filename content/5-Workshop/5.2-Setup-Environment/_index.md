@@ -8,7 +8,7 @@ pre: " <b> 5.2. </b> "
 
 #### What you need first
 
-+ An AWS account with permission to create S3, DynamoDB, Lambda, IAM, Cognito, API Gateway, CloudWatch, SNS, SQS, and Secrets Manager resources.
++ An AWS account with permission to create S3, DynamoDB, Lambda, IAM, Cognito, API Gateway, CloudWatch, SES, SQS, and Secrets Manager resources.
 + A consistent region for the whole build. This guide uses `ap-southeast-1`.
 + The ReviewSentinal source repository and the account ID for your AWS account.
 + A local machine with a browser, plus Node.js if you plan to build the frontend locally.
@@ -18,7 +18,7 @@ pre: " <b> 5.2. </b> "
 1. Sign in to the AWS Console and confirm the region is set to `ap-southeast-1`.
 2. Record the account ID from the user menu in the top-right corner.
 3. Make sure you can open the S3, DynamoDB, Lambda, Cognito, API Gateway, and CloudWatch consoles without permission errors.
-4. Keep the deployment guide open while you work, because several steps reuse the same names and ARNs later in the workshop.
+4. Refer to the workshop sections for resource names and ARNs as needed.
 
 #### Expected output
 

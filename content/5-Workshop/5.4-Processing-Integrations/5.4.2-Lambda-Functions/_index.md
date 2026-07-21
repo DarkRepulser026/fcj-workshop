@@ -46,8 +46,9 @@ Create the three Lambda handlers that power the ingestion, analysis, and API flo
 3. Paste the same deployment package again and deploy it.
 4. Set the handler to `lambda_function.lambda_handler_sentiment_analyzer`.
 5. Set timeout to 2 minutes and memory to 1024 MB.
-6. Add `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `SNS_TOPIC_ARN`, `OPENROUTER_MODEL`, and `OPENROUTER_API_KEY_SECRET_NAME`.
+6. Add `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `OPENROUTER_MODEL`, and `OPENROUTER_API_KEY_SECRET_NAME`.
 7. Configure the same DLQ.
+8. **Important**: This function now uses Amazon SES for user notifications instead of SNS. No SNS topic ARN is needed.
 
 ### 3. Create the API function
 
@@ -59,13 +60,30 @@ Create the three Lambda handlers that power the ingestion, analysis, and API flo
 6. Add `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `USERS_TABLE`, `RAW_BUCKET`, and `CORS_ALLOWED_ORIGIN`.
 7. Configure the same DLQ.
 
+### Analysis completion flow (updated)
+
+The analyzer function now follows this flow when processing reviews:
+1. Process all review records from the DynamoDB stream batch
+2. For each review:
+   - Perform sentiment analysis using Comprehend
+   - Optionally get deeper insights from OpenRouter if requested
+   - Update the review record with sentiment analysis results
+   - Track which user uploaded the review (from UploadedBy field)
+   - Increment sentiment counters (Positive/Neutral/Negative/Mixed)
+3. After processing all records:
+   - Log the overall analysis summary
+   - Group reviews by the user who uploaded them, then by product
+   - For each user-product combination, calculate specific sentiment counts
+   - Send a personalized email summary via Amazon SES to each user for each product they uploaded
+   - The email includes the analysis summary in the requested format
+
 ### Notes
 
 1. Keep all three handlers in the same source file so deployment stays simple.
 2. The processor writes review records after S3 upload.
-3. The analyzer runs Comprehend and can optionally call OpenRouter.
+3. The analyzer runs Comprehend and can optionally call OpenRouter, then sends completion emails via SES.
 4. The API function serves REST requests and the scheduled daily digest.
 
 ### Expected result
 
-All three Lambda functions should exist, use the correct roles, and be ready for event source wiring on the next subpage.
+All three Lambda functions should exist, use the correct roles, and be ready for event source wiring on the next subpage. The analyzer function should be configured to send emails via Amazon SES when analysis completes.

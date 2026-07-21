@@ -10,9 +10,9 @@ Chúc mừng bạn đã hoàn thành hướng dẫn triển khai.
 
 #### Nội dung
 
-1. [Dọn dẹp frontend](5.06.1-frontend/)
-2. [Dọn dẹp backend và dữ liệu](5.06.2-backend-data/)
-3. [Xác minh](5.06.3-verification/)
+1. [Dọn dẹp frontend](5.6.1-frontend/)
+2. [Dọn dẹp backend và dữ liệu](5.6.2-backend-data/)
+3. [Xác minh](5.6.3-verification/)
 
 #### Dọn dẹp
 
@@ -20,9 +20,9 @@ Chúc mừng bạn đã hoàn thành hướng dẫn triển khai.
 2. Xóa stage API Gateway và REST API nếu không còn cần endpoint.
 3. Xóa các Lambda function và IAM role của chúng.
 4. Làm rỗng rồi xóa bucket S3 dùng để upload.
-5. Xóa các bảng DynamoDB, SNS topic, SQS queue và Secrets Manager secret.
+5. Xóa các bảng DynamoDB, SQS queue và Secrets Manager secret.
 6. Xác nhận CloudWatch dashboard và alarm đã được gỡ bỏ nếu bạn không muốn chúng tiếp tục tạo chi phí hoặc cảnh báo.
 
 #### Kết quả cuối
 
-Sau khi dọn dẹp, tài khoản không nên còn bất kỳ tài nguyên ReviewSentinal nào.
+Sau khi dọn dẹp, tài khoản không nên còn bất kỳ tài nguyên ReviewSentinal nào. Lưu ý rằng các địa chỉ email đã xác minh trong Amazon SES không bị xóa ở bước này vì chúng có thể được dùng cho mục đích khác.

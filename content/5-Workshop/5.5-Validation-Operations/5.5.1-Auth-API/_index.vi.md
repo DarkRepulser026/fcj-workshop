@@ -2,7 +2,6 @@
 title: "5.5.1 Auth và API"
 weight: 1
 ---
-
 # Thiết lập Auth và API
 
 ## Tổng quan
@@ -22,7 +21,6 @@ Tạo lớp Cognito và API Gateway để public ReviewSentinal cho người dù
 - `POST /products`
 - `POST /upload`
 - `POST /analyze`
-- `POST /webhook`
 
 ## Từng bước
 
@@ -66,7 +64,7 @@ Tạo lớp Cognito và API Gateway để public ReviewSentinal cho người dù
 2. Tạo `{id}` bên trong `/products`.
 3. Tạo `reviews` và `analytics` bên trong `{id}`.
 4. Tạo `{review_id}` bên trong `reviews`.
-5. Tạo các resource `/upload`, `/analyze`, và `/webhook`.
+5. Tạo các resource `/upload` và `/analyze`.
 
 ### 6. Gắn method và integration
 
@@ -74,7 +72,6 @@ Tạo lớp Cognito và API Gateway để public ReviewSentinal cho người dù
 2. Bật Lambda proxy integration.
 3. Trỏ tất cả method vào `review-sentiment-analyzer-api`.
 4. Gắn authorization `cognito-authorizer` cho route protected.
-5. Đặt `/webhook` là `NONE` và yêu cầu API key.
 
 ### 7. Bật CORS
 
@@ -87,15 +84,6 @@ Tạo lớp Cognito và API Gateway để public ReviewSentinal cho người dù
 
 1. Deploy stage mới tên `dev`.
 2. Copy Invoke URL từ stage.
-3. Tạo API key và usage plan cho webhook.
-4. Gắn stage `dev` vào usage plan.
-
-### 9. Nối EventBridge digest
-
-1. Mở Lambda API.
-2. Thêm trigger EventBridge schedule.
-3. Tạo rule `review-sentiment-analyzer-daily-digest`.
-4. Dùng `rate(1 day)`.
 
 ### Ghi chú
 

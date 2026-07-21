@@ -2,7 +2,6 @@
 title: "5.6.2 Dọn dẹp backend và dữ liệu"
 weight: 2
 ---
-
 # Dọn dẹp backend và dữ liệu
 
 ## Tổng quan
@@ -15,23 +14,21 @@ Xóa các tài nguyên API, compute, storage, messaging và secret đang vận h
 - Lambda function và IAM role
 - Bucket S3 dùng để upload
 - Các bảng DynamoDB
-- SNS topic và SQS queue
+- SQS queue (SNS topic đã được thay thế bằng SES để gửi thông báo)
 - Secrets Manager secret
 - CloudWatch dashboard và alarm
 
 ## Từng bước
 
 1. Xóa API Gateway API và stage của nó.
-2. Xóa API key và usage plan của webhook nếu đã tạo.
-3. Xóa EventBridge rule digest.
-4. Xóa ba Lambda function.
-5. Xóa CloudWatch log groups của các function đó.
-6. Xóa IAM role mà Lambda đang dùng.
-7. Xóa SQS queue và SNS topic.
-8. Xóa Secrets Manager secret.
-9. Xóa các bảng DynamoDB.
-10. Làm rỗng rồi xóa bucket S3 upload.
-11. Xóa CloudWatch dashboard và alarm.
+2. Xóa ba Lambda function.
+3. Xóa CloudWatch log groups của các function đó.
+4. Xóa IAM role mà Lambda đang dùng.
+5. Xóa SQS queue (SNS topic không cần thiết vì thông báo sử dụng Amazon SES).
+6. Xóa Secrets Manager secret.
+7. Xóa các bảng DynamoDB.
+8. Làm rỗng rồi xóa bucket S3 upload.
+9. Xóa CloudWatch dashboard và alarm.
 
 ## Ghi chú
 
@@ -41,4 +38,4 @@ Xóa các tài nguyên API, compute, storage, messaging và secret đang vận h
 
 ## Kết quả mong đợi
 
-Sau bước này, các dịch vụ chính của ứng dụng không còn tồn tại.
+Sau bước này, các dịch vụ chính của ứng dụng không còn tồn tại. Lưu ý rằng các địa chỉ email đã xác minh trong SES không bị xóa ở bước này vì chúng có thể được dùng cho mục đích khác.

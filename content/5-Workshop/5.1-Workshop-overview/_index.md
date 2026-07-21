@@ -12,7 +12,7 @@ ReviewSentinal is a serverless AWS application that ingests product reviews, sto
 
 #### What gets deployed
 
-+ **Storage and events**: S3 for raw uploads, DynamoDB for review and product records, SQS for failures, and SNS for alerts.
++ **Storage and events**: S3 for raw uploads, DynamoDB for review and product records, SQS for failures, and SES for alerts.
 + **Processing**: three Lambda functions for review ingestion, sentiment analysis, and API access.
 + **Access layer**: API Gateway, Cognito, and the frontend-facing upload and query flow.
 + **Optional insight**: Secrets Manager stores the OpenRouter API key for the deeper analysis pass if you choose to enable it.

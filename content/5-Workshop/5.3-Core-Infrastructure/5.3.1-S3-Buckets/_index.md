@@ -36,14 +36,25 @@ Create the raw upload bucket first. The application uploads review files directl
 
 1. Open the bucket's **Permissions** tab.
 2. Edit the **Cross-origin resource sharing (CORS)** configuration.
-3. Paste the local development CORS policy from the deployment guide.
+3. Paste the following CORS configuration for local development:
+```json
+[
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedOrigins": ["http://localhost:3000"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3000
+  }
+]
+```
 4. Save the configuration.
 
 ### Notes
 
 - Keep the bucket private.
 - The upload path uses a presigned S3 URL, so CORS matters even though the API is otherwise serverless.
-- You will return here later to add the deployed frontend origin.
+- You will return here later in the workshop to add the deployed frontend origin.
 
 ### Expected result
 

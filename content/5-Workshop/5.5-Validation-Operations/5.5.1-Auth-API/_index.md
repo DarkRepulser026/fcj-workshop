@@ -2,7 +2,6 @@
 title: "5.5.1 Auth and API"
 weight: 1
 ---
-
 # Auth and API setup
 
 ## Overview
@@ -22,7 +21,6 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 - `POST /products`
 - `POST /upload`
 - `POST /analyze`
-- `POST /webhook`
 
 ## Step-by-step
 
@@ -67,15 +65,14 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 2. Under `/products`, create `{id}`.
 3. Under `{id}`, create `reviews` and `analytics`.
 4. Under `reviews`, create `{review_id}`.
-5. Create the top-level `/upload`, `/analyze`, and `/webhook` resources.
+5. Create the top-level `/upload` and `/analyze` resources.
 
 ### 6. Add methods and integrations
 
-1. Add the required methods for each resource listed in the deployment guide.
+1. Add the required methods for each resource listed in the workshop.
 2. Use Lambda proxy integration.
 3. Point every method at `review-sentiment-analyzer-api`.
 4. Keep the authorization on the product, upload, and analysis routes set to `cognito-authorizer`.
-5. Set `/webhook` authorization to `NONE` and mark it as API-key required.
 
 ### 7. Configure CORS
 
@@ -88,15 +85,6 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 
 1. Deploy a new `dev` stage.
 2. Copy the Invoke URL from the stage page.
-3. Save the API key and usage plan for the webhook route.
-4. Add the deployed stage to the usage plan.
-
-### 9. Wire the EventBridge digest
-
-1. Open the API Lambda.
-2. Add an EventBridge schedule trigger.
-3. Create a new rule named `review-sentiment-analyzer-daily-digest`.
-4. Use the schedule expression `rate(1 day)`.
 
 ### Notes
 

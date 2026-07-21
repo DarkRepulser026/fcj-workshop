@@ -12,7 +12,7 @@ ReviewSentinal là một ứng dụng AWS serverless nhận dữ liệu đánh g
 
 #### Những gì được triển khai
 
-+ **Lưu trữ và sự kiện**: S3 cho file tải lên thô, DynamoDB cho dữ liệu review và sản phẩm, SQS cho lỗi, SNS cho cảnh báo.
++ **Lưu trữ và sự kiện**: S3 cho file tải lên thô, DynamoDB cho dữ liệu review và sản phẩm, SQS cho lỗi, SES cho cảnh báo.
 + **Xử lý**: ba Lambda function cho nhận review, phân tích cảm xúc và API.
 + **Lớp truy cập**: API Gateway, Cognito, và luồng upload/query ở phía frontend.
 + **Phân tích tùy chọn**: Secrets Manager lưu API key OpenRouter nếu bạn muốn bật bước phân tích sâu hơn.

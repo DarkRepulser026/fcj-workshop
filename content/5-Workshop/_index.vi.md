@@ -16,9 +16,9 @@ Hướng dẫn đi theo một luồng triển khai duy nhất: tạo lớp dữ 
 
 #### Nội dung
 
-1. [Tổng quan workshop](5.01-Workshop-overview/)
-2. [Điều kiện chuẩn bị](5.02-setup-environment/)
-3. [Hạ tầng nền](5.03-core-infrastructure/)
-4. [Xử lý và tích hợp](5.04-processing-integrations/)
-5. [Xác thực và vận hành](5.05-validation-operations/)
-6. [Dọn dẹp](5.06-cleanup/)
+1. [Tổng quan workshop](5.1-Workshop-overview/)
+2. [Điều kiện chuẩn bị](5.2-setup-environment/)
+3. [Hạ tầng nền](5.3-core-infrastructure/)
+4. [Xử lý và tích hợp](5.4-processing-integrations/)
+5. [Xác thực và vận hành](5.5-validation-operations/)
+6. [Dọn dẹp](5.6-cleanup/)

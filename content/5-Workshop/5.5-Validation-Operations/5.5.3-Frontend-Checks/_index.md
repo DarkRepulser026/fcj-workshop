@@ -21,7 +21,7 @@ Use the deployed backend values to verify the frontend configuration and basic u
 ### 1. Prepare the local frontend
 
 1. Create a Vite React TypeScript app if you have not already.
-2. Install the dependencies from the deployment guide.
+2. Install the dependencies as specified in the workshop.
 3. Configure Tailwind if you are using the styled dashboard component.
 4. Add the favicon and title changes in `index.html`.
 

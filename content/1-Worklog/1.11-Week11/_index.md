@@ -11,8 +11,8 @@ pre: " <b> 1.11. </b> "
 * Define the security model: Cognito auth flow, IAM least-privilege roles, API Gateway authorization.
 * Design the DynamoDB data model (Reviews, Products, Users tables and access patterns).
 * Draft the Lambda function specifications (review-processor, sentiment-analyzer, API handler) and their triggers.
-* Prepare the Terraform module structure and local dev/test environment.
-* Begin implementing the base infrastructure (S3 buckets, DynamoDB tables) as a foundation for Week 12 build-out.
+* Prepare infrastructure-as-code approach and development environment.
+* Prepare foundational infrastructure components for implementation.
 
 ---
 
@@ -24,7 +24,7 @@ pre: " <b> 1.11. </b> "
 | 3 | Design security model: Cognito user pool, JWT-based API Gateway authorizer, IAM role scoping. <br>- Document threat considerations for a demo-scale project. | 30/06/2026 | 30/06/2026 | AWS Study Group |
 | 4 | Design DynamoDB schema (Reviews, Products, Users) with keys, GSIs, and access patterns. <br>- Plan S3 bucket layout and event triggers. | 01/07/2026 | 01/07/2026 | AWS Study Group |
 | 5 | Draft Lambda function specs: `review_processor`, `sentiment_analyzer`, `api_handler`. <br>- Define input/output contracts and error-handling approach. | 02/07/2026 | 02/07/2026 | AWS Study Group |
-| 6 | Set up Terraform project structure and local environment. <br>- Implement base resources: S3 buckets and DynamoDB tables. | 03/07/2026 | 03/07/2026 | AWS Study Group |
+| 6   | - Finalize infrastructure-as-code approach and development environment<br>- Prepare foundational components (S3 buckets, DynamoDB tables) for implementation | 03/07/2026 | 03/07/2026 | AWS Study Group |
 
 ---
 
@@ -42,10 +42,10 @@ I defined the DynamoDB table structure for Reviews, Products, and Users, includi
 #### **4. Drafted Lambda Function Specifications**
 I wrote specifications for the three core Lambda functions — `review_processor` (S3 trigger, validation/cleaning/dedup), `sentiment_analyzer` (DynamoDB Streams trigger, Comprehend + optional Bedrock insights), and `api_handler` (API Gateway REST endpoints). Each spec includes expected inputs/outputs and a consistent error-handling/response format to reduce integration issues during implementation.
 
-#### **5. Prepared Terraform Structure and Began Base Implementation**
-I set up the Terraform project layout (providers, variables, modules) and implemented the first base resources — S3 buckets and DynamoDB tables — so that Week 12 can focus on wiring up Lambda, API Gateway, and Cognito without re-planning infrastructure basics.
+#### **5. Prepared Infrastructure Approach and Foundation**
+I defined the infrastructure-as-code approach and prepared the development environment. I finalized the specifications for foundational components (S3 buckets and DynamoDB tables) so that Week 12 can focus on implementing the application logic without revisiting infrastructure planning.
 
 #### **6. Set Groundwork for Week 12**
-With architecture, security model, data model, and Lambda specs finalized, and base Terraform resources in place, the project is positioned to move into full implementation next week: deploying Lambda functions, connecting API Gateway with Cognito authorization, building the React frontend integration, and validating the end-to-end flow with CloudWatch monitoring.
+With architecture, security model, data model, and Lambda specs finalized, and foundational infrastructure components prepared, the project is positioned to move into full implementation next week: deploying Lambda functions, connecting API Gateway with Cognito authorization, building the React frontend integration, and validating the end-to-end flow with CloudWatch monitoring.
 
 ---

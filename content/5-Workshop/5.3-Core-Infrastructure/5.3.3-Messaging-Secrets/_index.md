@@ -1,5 +1,5 @@
 ---
-title: "5.03.3 Messaging and secrets"
+title: "5.3.3 Messaging and secrets"
 weight: 3
 ---
 
@@ -7,7 +7,7 @@ weight: 3
 
 ## Overview
 
-Create the dead-letter queue, SNS alert topic, and optional secret that the Lambdas will use later.
+Create the dead-letter queue, configure Amazon SES for user notifications, and set up the secret that the Lambdas will use later.
 
 ### SQS dead-letter queue
 
@@ -19,16 +19,13 @@ Create the dead-letter queue, SNS alert topic, and optional secret that the Lamb
 6. Create the queue.
 7. Copy the queue ARN from the details page.
 
-### SNS alert topic
+### Amazon SES for user notifications
 
-1. Open SNS and go to **Topics** → **Create topic**.
-2. Select **Standard**.
-3. Name the topic `sentiment-alerts`.
-4. Keep encryption on with the AWS managed SNS key.
-5. Create the topic.
-6. Create an email subscription using your own email address.
-7. Confirm the subscription from your inbox.
-8. Copy the topic ARN.
+1. Go to **Amazon SES → Verified identities → Create identity**
+2. Identity type: **Email address**
+3. Email: `noreply@yourdomain.com` (or your Gmail if you're in the SES sandbox)
+4. Verify the email address
+5. *(Sandbox only)* Also verify your own receiving email address
 
 ### Secrets Manager secret
 
@@ -41,12 +38,11 @@ Create the dead-letter queue, SNS alert topic, and optional secret that the Lamb
 7. Skip rotation and store it.
 8. Copy the secret ARN.
 
-### Notes
-
-- Keep the placeholder secret empty of structure because the Lambda reads the raw string directly.
-- The DLQ is used by the Lambdas for async failure handling.
-- You will paste the ARN values into IAM policies in the next section.
-
 ### Expected result
 
-You should have an SQS DLQ ARN, an SNS topic ARN with a confirmed email subscription, and a Secrets Manager secret ARN ready for the IAM roles.
+You should have:
+- An SQS DLQ ARN
+- A verified SES sender email address
+- A Secrets Manager secret ARN
+
+These ARNs and configuration details will be used in IAM policies and Lambda environment variables in subsequent sections.

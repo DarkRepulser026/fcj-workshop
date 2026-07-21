@@ -12,11 +12,11 @@ Phần này bao gồm lớp tích hợp phía người dùng: API Gateway, Cogni
 
 #### Nội dung
 
-1. [Auth và API](5.05.1-auth-api/)
-2. [Monitoring](5.05.2-monitoring/)
-3. [Kiểm tra frontend](5.05.3-frontend-checks/)
-4. [Sẵn sàng triển khai](5.05.4-ready-to-launch/)
-5. [Dữ liệu test mẫu](5.05.5-sample-test-data/)
+1. [Auth và API](5.5.1-auth-api/)
+2. [Monitoring](5.5.2-monitoring/)
+3. [Kiểm tra frontend](5.5.3-frontend-checks/)
+4. [Sẵn sàng triển khai](5.5.4-ready-to-launch/)
+5. [Dữ liệu test mẫu](5.5.5-sample-test-data/)
 
 #### Cấu hình truy cập
 

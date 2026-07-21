@@ -12,9 +12,9 @@ Phần này tạo IAM role, Lambda function và trigger sự kiện để kết 
 
 #### Nội dung
 
-1. [IAM role](5.04.1-iam-roles/)
-2. [Lambda function](5.04.2-lambda-functions/)
-3. [Trigger sự kiện](5.04.3-event-triggers/)
+1. [IAM role](5.4.1-iam-roles/)
+2. [Lambda function](5.4.2-lambda-functions/)
+3. [Trigger sự kiện](5.4.3-event-triggers/)
 
 #### Xây dựng lớp xử lý
 

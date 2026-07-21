@@ -1,5 +1,5 @@
 ---
-title: "5.05.5 Dữ liệu test mẫu"
+title: "5.5.5 Dữ liệu test mẫu"
 weight: 5
 ---
 
