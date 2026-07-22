@@ -16,6 +16,9 @@ pre: " <b> 5.2. </b> "
 **Must have file for the workshop**
 ![Download lambda functions (PY)](01_lambda_functions.py)
 ![Download react frontend (TSX)](03_react_dashboard.tsx)
+![Download review sample 1 (20 products) (json)](test_reviews_1.json)
+![Download review sample 2 (100 products) (csv)](reviews_sample_1.csv)
+![Download review sample 3 (100 products) (csv)](reviews_sample_2.csv)
 
 #### Before you start
 
