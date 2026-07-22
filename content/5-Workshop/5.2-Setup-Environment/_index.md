@@ -14,8 +14,8 @@ pre: " <b> 5.2. </b> "
 + A local machine with a browser, plus Node.js if you plan to build the frontend locally.
 
 **Must have file for the workshop**
-[Download lambda functions (PY)](01_lambda_functions.py)
-[Download react frontend (PY)](03_react_dashboard.tsx)
+![Download lambda functions (PY)](01_lambda_functions.py)
+![Download react frontend (TSX)](03_react_dashboard.tsx)
 
 #### Before you start
 
