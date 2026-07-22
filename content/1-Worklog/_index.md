@@ -30,4 +30,4 @@ The worklog is organized as a 12-week First Cloud Journey on AWS. Each week focu
 
 **Week 11:**   [ReviewSentinel architecture, security, and data model planning](1.11-week11/)
 
-**Week 12:** _To be updated_
+**Week 12:** [End-to-end ReviewSentinal implementation, serverless integration, monitoring, and application validation](1.12-week12/)

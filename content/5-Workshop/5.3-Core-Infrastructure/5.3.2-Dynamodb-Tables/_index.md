@@ -26,6 +26,8 @@ Create the three tables that hold review data, product data, and user data. The 
 6. Leave encryption as the default DynamoDB-managed key.
 7. Create the table.
 
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-1.PNG)
+
 ### Reviews table
 
 1. Open DynamoDB and choose **Create table**.
@@ -37,21 +39,40 @@ Create the three tables that hold review data, product data, and user data. The 
 7. Leave encryption as the default DynamoDB-managed key.
 8. Create the table.
 
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-2.PNG)
+
 After creation:
 
 1. Open the `Reviews` table.
 2. Enable **DynamoDB Streams** from the **Exports and streams** tab.
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-3.PNG)
+
 3. Choose **New image** as the stream view type.
 4. Go to the **Backups** tab and enable **Point-in-time recovery**.
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-4.PNG)
+
 4. Go to the **Indexes** tab.
 5. Create a Global Secondary Index named `SentimentIndex` on the `Reviews` table:
    - Partition key: `ProductID` (String)
    - Sort key: `Sentiment`
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-5.PNG)
+
    - Projected attributes: `ReviewText`, `Rating`, `CreatedAt`, `KeyPhrases`, and `UserID`
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-6.PNG)
+
 6. Create a Global Secondary Index named `AnalysisIndex` on the `Reviews` table:
    - Partition key: `AnalysisID` (String)
    - Sort key: `Leave blank` (or use `ReviewID` if sorting within analysis is needed)
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-7.PNG)
+
    - Projected attributes: `KEYS_ONLY` (or `ALL` if needed for your queries)
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-8.PNG)
 
 ### Products table
 
@@ -68,6 +89,8 @@ After creation:
 3. Leave out the sort key.
 4. Use **On-demand** capacity.
 5. Enable point-in-time recovery after creation.
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-9.PNG)
 
 ### Notes
 

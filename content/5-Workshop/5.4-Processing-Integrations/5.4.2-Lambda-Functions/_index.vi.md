@@ -32,14 +32,31 @@ Cả ba Lambda đều sử dụng cùng một **deployment package**, tuy nhiên
 2. Chọn **Author from scratch**.
 3. Đặt tên hàm `review-sentiment-analyzer-processor`.
 4. Chọn **Python 3.11** và kiến trúc mặc định **x86_64**.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-1.PNG)
+
 5. Sử dụng IAM role hiện có `review-processor-role`.
 6. Chọn **Create function**.
 7. Thay thế toàn bộ mã mặc định bằng nội dung của tệp `01_lambda_functions.py`.
 8. Chọn **Deploy**.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-2.PNG)
+
 9. Mở **Runtime settings** và đặt **Handler** thành `lambda_function.lambda_handler_review_processor`.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-3.PNG)
+
 10. Đặt **Timeout** là **1 minute** và **Memory** là **512 MB**.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-4.PNG)
+
 11. Thêm các biến môi trường `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `USERS_TABLE` và `RAW_BUCKET`.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-5.PNG)
+
 12. Cấu hình **Asynchronous invocation** để sử dụng **Dead-letter queue (DLQ)** là `lambda-dlq`.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-6.PNG)
 
 ### 2. Tạo hàm Analyzer
 
@@ -60,6 +77,8 @@ Cả ba Lambda đều sử dụng cùng một **deployment package**, tuy nhiên
 5. Đặt **Timeout** là **30 seconds** và **Memory** là **256 MB**.
 6. Thêm các biến môi trường `REVIEWS_TABLE`, `PRODUCTS_TABLE`, `USERS_TABLE`, `RAW_BUCKET` và `CORS_ALLOWED_ORIGIN`.
 7. Cấu hình **Asynchronous invocation** để sử dụng **Dead-letter queue (DLQ)** là `lambda-dlq`.
+
+![Guide](/fcj-workshop/images/5-Workshop/lambda-7.PNG)
 
 ### Quy trình hoàn thành phân tích
 

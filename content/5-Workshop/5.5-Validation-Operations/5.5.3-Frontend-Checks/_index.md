@@ -22,6 +22,9 @@ Use the deployed backend values to verify the frontend configuration and basic u
 
 1. Console → **Amplify** → **Create new app**
 2. Choose **Deploy without a Git provider** (no repo for this study/demo build)
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-1.PNG)
+
 3. App name: `review-sentiment-analyzer-frontend`
 4. Environment name: `production`
 5. Deploy a throwaway placeholder now; you'll redeploy the real build later:
@@ -29,6 +32,9 @@ Use the deployed backend values to verify the frontend configuration and basic u
 echo "<h1>Coming soon</h1>" > index.html
 7z a placeholder.zip index.html
 ```
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-2.PNG)
+
 Method: **Drag and drop** → **Choose .zip folder** → select `placeholder.zip` → **Save and deploy**. You just need the app to exist so it has a default domain.
 6. Note the **default domain** shown on the app's overview page (looks like `https://production.dXXXXXXXXXXXXX.amplifyapp.com`)
 
@@ -43,6 +49,8 @@ Method: **Drag and drop** → **Choose .zip folder** → select `placeholder.zip
   }
 ```
 2. Save
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-3.PNG)
 
 **Your public URL is the Amplify domain directly**: `https://<branch>.<app-id>.amplifyapp.com` (already valid HTTPS). Copy it from the app's overview page.
 
@@ -105,6 +113,8 @@ npm install recharts lucide-react react-oidc-context oidc-client-ts
 npm install tailwindcss @tailwindcss/vite
 ```
 
+![Guide](/fcj-workshop/images/5-Workshop/frontend-4.PNG)
+
 **`vite.config.ts`** — add the Tailwind plugin:
 ```ts
 import { defineConfig } from 'vite'
@@ -145,14 +155,25 @@ EOF
 npm run build
 ```
 
+![Guide](/fcj-workshop/images/5-Workshop/frontend-5.PNG)
+
 > Two things worth double-checking before you build: the `region` in the first two variables must match wherever you actually created these resources (this guide uses `ap-southeast-1` throughout), and the callback/logout URIs must be an **exact string match** — including trailing slashes and http vs https — against what's registered on the Cognito app client, or sign-in will fail with a redirect-mismatch error.
 
 ### 5. Deploy the build to Amplify
 
 1. Amplify console → your app → the `production` branch
-2. Look for **Deploy updates** / manual deploy → **Start a manual deployment**, same screen as 8.2
+2. Look for **Deploy updates** / manual deploy → **Start a manual deployment**
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-6.PNG)
+
 3. Zip the files of `frontend/dist/` folder's *contents* (not the folder itself)
-4. Method: **Drag and drop** → **Choose .zip folder** → select `build.zip` — this replaces the placeholder from 8.2
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-7.PNG)
+
+4. Method: **Drag and drop** → **Choose .zip folder** → select `build.zip`
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-8.PNG)
+
 5. Once it finishes, visit the Amplify domain — you should see the sign-in gate.
 
 ### 6. Add the real domain to Cognito and S3
@@ -166,10 +187,14 @@ Two places still only know about `localhost:3000` — both need the real Amplify
 4. Keep the `localhost:3000` ones too — handy for local dev later
 5. Save
 
+![Guide](/fcj-workshop/images/5-Workshop/frontend-9.PNG)
+
 **S3:**
 6. S3 → `raw-reviews-<ACCOUNT_ID>-ap-southeast-1` → **Permissions** → **Cross-origin resource sharing (CORS)** → **Edit**
 7. Add `"https://<your-amplify-domain>"` to the `AllowedOrigins` array, alongside the existing `http://localhost:3000` entry
 8. Save
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-10.PNG)
 
 ### 7. Test end-to-end
 
@@ -178,6 +203,8 @@ Two places still only know about `localhost:3000` — both need the real Amplify
 3. Should redirect back to `/callback` → briefly loading → then the actual dashboard, showing products from `GET /products`
 4. Try uploading `test_reviews.json` through the UI
 5. Click **Logout** — should bounce through Cognito's logout endpoint and land back at the sign-in gate
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-11.PNG)
 
 ### Expected result
 

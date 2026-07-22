@@ -32,13 +32,26 @@ Bạn sẽ tạo **CloudWatch Dashboard** cùng các **CloudWatch Alarm** nhằm
 1. Mở **Amazon CloudWatch** → **Dashboards**.
 2. Chọn **Create dashboard**.
 3. Đặt tên dashboard `ReviewAnalyzerDashboard`.
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-1.PNG)
+
 4. Thêm một widget **Metrics → Metrics console → Line** cho ba Lambda function.
 5. Thêm các metric:
    - `Invocations`
    - `Errors`
    - `Duration`
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-2.PNG)
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-3.PNG)
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-4.PNG)
+
 6. Thêm widget thứ hai với loại **Metrics → Metrics console → Data table** cho DynamoDB.
 7. Thêm metric `ConsumedWriteCapacityUnits` của bảng `Reviews`.
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-5.PNG)
+
 8. Thêm widget **Logs → Line query** để thống kê số lượng thông báo lỗi theo thời gian.
 
 ```sql
@@ -49,6 +62,8 @@ filter @message like /(?i)error/
 
 9. Lưu Dashboard.
 
+![Guide](/fcj-workshop/images/5-Workshop/monitor-6.PNG)
+
 ### 2. Tạo Alarm cho lỗi của từng Lambda
 
 1. Mở **Amazon CloudWatch** → **Alarms** → **All alarms**.
@@ -57,9 +72,20 @@ filter @message like /(?i)error/
 4. Thiết lập:
    - Period: **5 minutes**
    - Điều kiện kích hoạt: **Errors > 5**
+
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-7.PNG)
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-8.PNG)
+
 5. Gửi thông báo đến địa chỉ email đã xác minh của bạn. (Tạo một SNS Topic mới và sử dụng Topic này cho các Alarm còn lại.)
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-9.PNG)
+
 6. Lặp lại các bước trên cho Lambda `review-sentiment-analyzer-analyzer`.
 7. Tiếp tục lặp lại cho Lambda `review-sentiment-analyzer-api`.
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-10.PNG)
 
 ### 3. Tạo Alarm cho độ trễ của API
 
@@ -71,6 +97,8 @@ filter @message like /(?i)error/
 4. Kích hoạt Alarm khi `Duration` lớn hơn **5000 ms**.
 5. Gửi thông báo đến địa chỉ email đã xác minh của bạn.
 
+![Guide](/fcj-workshop/images/5-Workshop/monitor-11.PNG)
+
 ### 4. Tạo cảnh báo ngân sách (Budget Alerts)
 
 1. Mở **Billing and Cost Management** → **Budgets**.
@@ -80,6 +108,8 @@ filter @message like /(?i)error/
    - 80% chi phí thực tế (Actual Spend)
    - 100% chi phí dự báo (Forecasted Spend)
 5. Sử dụng địa chỉ email của bạn để nhận thông báo.
+
+![Guide](/fcj-workshop/images/5-Workshop/monitor-13.PNG)
 
 ### Lưu ý
 

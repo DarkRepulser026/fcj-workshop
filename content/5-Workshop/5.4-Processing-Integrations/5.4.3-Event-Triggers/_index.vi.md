@@ -28,6 +28,8 @@ Trong phần này, bạn sẽ kết nối các sự kiện từ dịch vụ lưu
 6. Thêm tiền tố (Prefix) `uploads/`.
 7. Xác nhận cảnh báo về **recursive invocation** rồi chọn **Add** để tạo trigger.
 
+![Guide](/fcj-workshop/images/5-Workshop/event-1.PNG)
+
 ### 2. Cấu hình DynamoDB Stream Trigger
 
 1. Mở Lambda `review-sentiment-analyzer-analyzer`.
@@ -37,6 +39,9 @@ Trong phần này, bạn sẽ kết nối các sự kiện từ dịch vụ lưu
 5. Giữ nguyên:
    - **Batch size:** `100`
    - **Starting position:** **Latest**
+
+![Guide](/fcj-workshop/images/5-Workshop/event-2.PNG)
+
 6. Thêm **Filter criteria** để Lambda chỉ được kích hoạt khi xảy ra sự kiện `INSERT` và trường `ProcessingStatus` có giá trị `PENDING`.
 
 ```json
@@ -46,6 +51,8 @@ Trong phần này, bạn sẽ kết nối các sự kiện từ dịch vụ lưu
   }
 ]
 ```
+
+![Guide](/fcj-workshop/images/5-Workshop/event-3.PNG)
 
 7. Bật tùy chọn **Split batch on error**.
 8. Chọn **Add** để tạo trigger.

@@ -24,6 +24,9 @@ Mục tiêu là xác nhận frontend đã được kết nối chính xác với
 
 1. Mở **Amazon Amplify** và chọn **Create new app**.
 2. Chọn **Deploy without a Git provider**.
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-1.PNG)
+
 3. Đặt tên ứng dụng `review-sentiment-analyzer-frontend`.
 4. Đặt **Environment name** là `production`.
 5. Triển khai một trang placeholder đơn giản để Amplify tạo domain mặc định.
@@ -32,6 +35,8 @@ Mục tiêu là xác nhận frontend đã được kết nối chính xác với
 echo "<h1>Coming soon</h1>" > index.html
 7z a placeholder.zip index.html
 ```
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-2.PNG)
 
 Sau đó triển khai bằng:
 
@@ -55,6 +60,8 @@ Sau đó triển khai bằng:
 ```
 
 2. Chọn **Save**.
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-3.PNG)
 
 URL công khai của ứng dụng sẽ có dạng:
 
@@ -145,6 +152,8 @@ npm install recharts lucide-react react-oidc-context oidc-client-ts
 npm install tailwindcss @tailwindcss/vite
 ```
 
+![Guide](/fcj-workshop/images/5-Workshop/frontend-4.PNG)
+
 #### Cấu hình `vite.config.ts`
 
 ```ts
@@ -189,19 +198,29 @@ EOF
 npm run build
 ```
 
+![Guide](/fcj-workshop/images/5-Workshop/frontend-5.PNG)
+
 > **Lưu ý:** Region trong `VITE_API_URL` và `VITE_COGNITO_AUTHORITY` phải trùng với Region đã triển khai. Callback URL và Sign-out URL cũng phải khớp hoàn toàn với cấu hình trong Cognito để tránh lỗi `redirect_mismatch`.
 
 ### 5. Triển khai frontend lên Amplify
 
 1. Mở **Amplify Console** → ứng dụng → branch `production`.
 2. Chọn **Deploy updates** hoặc **Start a manual deployment**.
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-6.PNG)
+
 3. Nén **toàn bộ nội dung** của thư mục `frontend/dist/` (không nén chính thư mục `dist`).
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-7.PNG)
+
 4. Chọn:
    - **Drag and drop**
    - **Choose .zip folder**
    - Chọn `build.zip`
 
 Điều này sẽ thay thế trang placeholder đã triển khai trước đó.
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-8.PNG)
 
 5. Sau khi hoàn tất, truy cập domain Amplify.
 
@@ -217,12 +236,16 @@ Bạn sẽ thấy màn hình đăng nhập.
 4. Giữ nguyên các URL `localhost`.
 5. Chọn **Save**.
 
+![Guide](/fcj-workshop/images/5-Workshop/frontend-9.PNG)
+
 #### Amazon S3
 
 1. Mở bucket `raw-reviews-<ACCOUNT_ID>-ap-southeast-1`.
 2. Chọn **Permissions → Cross-origin resource sharing (CORS) → Edit**.
 3. Thêm `https://<your-amplify-domain>` vào `AllowedOrigins`.
 4. Lưu thay đổi.
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-10.PNG)
 
 ### 7. Kiểm tra toàn bộ hệ thống
 
@@ -233,6 +256,8 @@ Bạn sẽ thấy màn hình đăng nhập.
 5. Thử tải lên tệp `test_reviews.json`.
 6. Chọn **Logout**.
 7. Người dùng sẽ được chuyển đến Cognito Logout Endpoint rồi quay trở lại màn hình đăng nhập.
+
+![Guide](/fcj-workshop/images/5-Workshop/frontend-11.PNG)
 
 ## Kết quả mong đợi
 

@@ -29,13 +29,23 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 1. Open **Cognito** → **Create user pool**.
 2. Choose **Single-page application (SPA)** as the application type.
 3. Name the application `review-sentiment-analyzer-client`.
-4. Use **Email** only for sign-in identifiers.
+4. Use **Email** and **Username** for sign-in identifiers.
 5. Enable self-registration for the demo build.
 6. Require both `email` and `name` at sign-up.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-1.PNG)
+
 7. Set the callback/return URL to `http://localhost:3000/callback`.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-2.PNG)
+
 8. Choose a Hosted UI domain prefix and create the user directory.
 9. After creation, open the app client settings and add `http://localhost:3000/logout` as a sign-out URL.
 10. Enable `ALLOW_ADMIN_USER_PASSWORD_AUTH` if you plan to use the CLI test flow later.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-3.PNG)
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-4.PNG)
 
 ### 2. Record the identifiers you will reuse
 
@@ -47,17 +57,27 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 
 1. Open **API Gateway** and choose **Create API**.
 2. Select **REST API** and create a **New API**.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-6.PNG)
+
 3. Name the API `review-sentiment-analyzer-api`.
 4. Keep the endpoint type **Regional**.
 5. Create the API.
 
+![Guide](/fcj-workshop/images/5-Workshop/auth-7.PNG)
+
 ### 4. Add the Cognito authorizer
 
 1. In the left sidebar, open **Authorizers**.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-8.PNG)
+
 2. Create a new authorizer named `cognito-authorizer`.
 3. Choose **Cognito** as the type.
 4. Attach the user pool you just created.
 5. Set the token source to `Authorization`.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-9.PNG)
 
 ### 5. Build the resource tree
 
@@ -66,6 +86,8 @@ Create the Cognito and API Gateway surface that exposes ReviewSentinal to users.
 3. Under `{id}`, create `reviews` and `analytics`.
 4. Under `reviews`, create `{review_id}`.
 5. Create the top-level `/upload` and `/analyze` resources.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-10.PNG)
 
 ### 6. Add methods and integrations
 ```
@@ -88,8 +110,14 @@ For **every** method (`GET /products`, `POST /products`, `DELETE /products/{id}`
 6. Lambda function: `review-sentiment-analyzer-api`
 7. Leave Method request settings (query params/headers/body) empty
 8. **Create method**
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-11.PNG)
+
 9. Open the method afterward → find **Authorization** under its method request settings → set to `cognito-authorizer`
 
+![Guide](/fcj-workshop/images/5-Workshop/auth-12.PNG)
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-13.PNG)
 
 ### 7. Configure CORS
 
@@ -98,10 +126,17 @@ For **every** method (`GET /products`, `POST /products`, `DELETE /products/{id}`
 3. Add `Default 4XX` and `Default 5XX` gateway responses.
 4. Confirm the console creates the `OPTIONS` methods automatically.
 
+![Guide](/fcj-workshop/images/5-Workshop/auth-14.PNG)
+
 ### 8. Deploy the API
 
 1. Deploy a new `dev` stage.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-15.PNG)
+
 2. Copy the Invoke URL from the stage page.
+
+![Guide](/fcj-workshop/images/5-Workshop/auth-16.PNG)
 
 ### Notes
 

@@ -27,6 +27,6 @@ Worklog được tổ chức theo FCAJ kéo dài 12 tuần. Mỗi tuần tập t
 
 **Tuần 10:** [AWS SAM, Amazon Cognito, thiết lập SSL và xử lý đơn hàng với SQS/SNS](1.10-week10/)
 
-**Tuần 11:** [Lên kế hoạch kiến trúc, bảo mật và mô hình dữ liệu cho ReviewSentinel](1.10-week11/)
+**Tuần 11:** [Lên kế hoạch kiến trúc, bảo mật và mô hình dữ liệu cho ReviewSentinel](1.11-week11/)
 
-**Tuần 12:** _Đang cập nhật_
+**Tuần 12:** [Triển khai, giám sát và kiểm thử toàn diện hệ thống ReviewSentinal](1.12-week12/)

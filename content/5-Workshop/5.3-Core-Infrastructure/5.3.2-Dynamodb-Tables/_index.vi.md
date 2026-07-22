@@ -30,6 +30,8 @@ Bảng `Reviews` là bảng chính của hệ thống và cần được cấu h
 6. Giữ nguyên tùy chọn mã hóa mặc định (**DynamoDB-managed key**).
 7. Chọn **Create table**.
 
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-1.PNG)
+
 ## Tạo bảng Reviews
 
 1. Mở **Amazon DynamoDB** và chọn **Create table**.
@@ -45,6 +47,8 @@ Bảng `Reviews` là bảng chính của hệ thống và cần được cấu h
 7. Giữ nguyên tùy chọn mã hóa mặc định (**DynamoDB-managed key**).
 8. Chọn **Create table**.
 
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-2.PNG)
+
 ### Cấu hình sau khi tạo bảng
 
 #### Bật DynamoDB Streams
@@ -54,10 +58,14 @@ Bảng `Reviews` là bảng chính của hệ thống và cần được cấu h
 3. Bật **DynamoDB Streams**.
 4. Chọn **New image** làm **Stream view type**.
 
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-3.PNG)
+
 #### Bật Point-in-Time Recovery (PITR)
 
 1. Chuyển sang tab **Backups**.
 2. Bật **Point-in-time recovery**.
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-4.PNG)
 
 #### Tạo Global Secondary Index (GSI)
 
@@ -69,6 +77,9 @@ Tạo Global Secondary Index có tên **SentimentIndex** với cấu hình:
 
 - **Partition key:** `ProductID` (String)
 - **Sort key:** `Sentiment`
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-5.PNG)
+
 - **Projected attributes:**
   - `ReviewText`
   - `Rating`
@@ -76,14 +87,21 @@ Tạo Global Secondary Index có tên **SentimentIndex** với cấu hình:
   - `KeyPhrases`
   - `UserID`
 
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-6.PNG)
+
 ##### GSI 2: AnalysisIndex
 
 Tạo Global Secondary Index có tên **AnalysisIndex** với cấu hình:
 
 - **Partition key:** `AnalysisID` (String)
 - **Sort key:** Để trống (hoặc sử dụng `ReviewID` nếu cần sắp xếp các review trong cùng một phiên phân tích)
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-7.PNG)
+
 - **Projected attributes:**
   - `KEYS_ONLY` (hoặc `ALL` nếu ứng dụng của bạn cần truy xuất toàn bộ dữ liệu)
+
+![Guide](/fcj-workshop/images/5-Workshop/dynamodb-8.PNG)
 
 ## Tạo bảng Products
 
