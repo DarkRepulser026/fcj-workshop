@@ -1,126 +1,66 @@
 ---
-title: "Blog 3"
-date: 2024-01-01
+title: "Blog 3: How Artera Uses AWS to Accelerate Prostate Cancer Diagnosis"
+date: 2026-06-18
 weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+This blog from the AWS Architecture Blog explains how **Artera**, a healthcare technology company, built an AI-powered platform to analyze biopsy images for predicting prostate cancer severity and patient response to treatment. Its **ArteraAI Prostate Test** has received FDA De Novo authorization, making it the first AI software approved for this purpose.
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+## Challenges Before AI
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Traditionally, treatment decisions relied on chemical assays that measured the expression of only a limited number of genes, resulting in several major challenges:
 
----
+* **Long turnaround time**: The entire diagnostic process could take up to **6 weeks**.
+* **Limited analysis capability**: Only a small subset of genes associated with cancer risk could be evaluated.
+* **Biopsy sample consumption**: Tissue samples were completely consumed during testing, preventing patients from undergoing additional diagnostic tests or participating in future clinical trials.
 
-## Architecture Guidance
+The system also faced several technical challenges:
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+* Biopsy images were extremely large, with some files reaching **8 GB** in size.
+* Each image had to be divided into tens of thousands of **image patches** before AI models could process them.
+* The platform had to comply with healthcare data regulations such as **HIPAA** across multiple countries.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+## Solution: AI Inference Architecture with Amazon ECS and Amazon EKS
 
-**The solution architecture is now as follows:**
+To overcome these challenges, Artera designed an AI architecture on AWS using multiple integrated services:
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+* **AWS Global Accelerator** and **Application Load Balancer** route requests from the physician portal into the Amazon VPC.
+* **Amazon ECS** hosts the web portal used by healthcare professionals.
+* **Amazon EKS** runs AI/ML inference workloads to analyze biopsy images using computer vision models.
+* **Amazon EFS** provides shared file storage accessible by both ECS and EKS during image processing.
+* **Amazon RDS** stores patient information and diagnostic results.
+* **Amazon ElastiCache** reduces latency for frequently accessed data.
+* **Amazon S3** stores original biopsy images and analysis outputs.
+* **AWS IAM** manages user and service permissions.
+* **AWS KMS** protects sensitive healthcare data through encryption key management.
+* **Amazon CloudWatch** monitors the entire infrastructure and application environment.
 
----
+One of the most impressive aspects of the architecture is its approach to **data locality**. By using **Amazon EFS** within the same AWS Region as the application, Artera can deploy resources regionally, ensuring patient data remains within required legal boundaries while still enabling rapid expansion into new markets.
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## Results
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+After deploying the AWS-based architecture, Artera achieved significant improvements:
 
----
+* **Reduced diagnostic turnaround time** from approximately **6 weeks to just 1–2 days**.
+* **Accelerated image processing**, allowing tens of thousands of image patches from each biopsy slide to be analyzed in just a few hours instead of several weeks.
+* **Workflow orchestration** breaks down large image files and processes them in parallel across Amazon EKS clusters, maximizing overall system performance.
 
-## Technology Choices and Communication Scope
+## Personal Perspective
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+What impressed me most is how Artera successfully balances three critical requirements of an AI-powered healthcare system:
 
----
+* Processing massive medical imaging datasets efficiently.
+* Complying with regional healthcare data residency and regulatory requirements.
+* Delivering faster diagnostic results to support timely clinical decision-making.
 
-## The Pub/Sub Hub
+The combination of **Amazon ECS** for the web application layer and **Amazon EKS** for AI inference provides an excellent real-world architecture for organizations building large-scale AI solutions on AWS.
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+For anyone interested in AI-powered healthcare systems or large-scale medical image processing on AWS, this article is definitely worth reading.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+![Solution Diagram](/fcj-workshop/images/3-BlogsTranslated/Blog3.png)
 
----
+Facebook Post (AWS Study Group - Pending Approval - Scheduled for July 18, 2026)
 
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
-
----
-
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+[Original Post (AWS Architecture Blog)](https://aws.amazon.com/blogs/architecture/how-artera-enhances-prostate-cancer-diagnostics-using-aws/)

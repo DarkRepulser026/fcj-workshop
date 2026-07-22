@@ -13,6 +13,10 @@ pre: " <b> 5.2. </b> "
 + The ReviewSentinal source repository and the account ID for your AWS account.
 + A local machine with a browser, plus Node.js if you plan to build the frontend locally.
 
+**Must have file for the workshop**
+[Download lambda functions (PY)](01_lambda_functions.py)
+[Download react frontend (PY)](03_react_dashboard.tsx)
+
 #### Before you start
 
 1. Sign in to the AWS Console and confirm the region is set to `ap-southeast-1`.

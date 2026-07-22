@@ -1,127 +1,66 @@
 ---
-title: "Blog 3"
-date: 2024-01-01
+title: "Blog 3: Artera và bài toán ứng dụng AWS để tăng tốc chẩn đoán ung thư tuyến tiền liệt"
+date: 2026-06-18
 weight: 3
 chapter: false
-pre: " <b> 3.3. </b> "
+pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Bài blog từ AWS Architecture Blog giới thiệu cách **Artera** – một công ty trong lĩnh vực y học – xây dựng nền tảng AI phân tích ảnh sinh thiết để dự đoán mức độ nguy hiểm của ung thư tuyến tiền liệt cũng như khả năng đáp ứng điều trị của bệnh nhân. Sản phẩm **ArteraAI Prostate Test** đã được FDA cấp phép De Novo, trở thành phần mềm AI đầu tiên được công nhận cho mục đích này.
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+## Vấn đề trước khi có AI
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Trước đây, việc xác định phác đồ điều trị chủ yếu dựa trên xét nghiệm hóa học đo mức biểu hiện của một số ít gene và tồn tại nhiều hạn chế:
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+* **Thời gian xử lý kéo dài**: Toàn bộ quy trình có thể mất đến **6 tuần** mới trả kết quả.
+* **Khả năng phân tích hạn chế**: Chỉ đánh giá được một số lượng nhỏ gene liên quan đến nguy cơ ung thư.
+* **Tiêu hao mẫu sinh thiết**: Mẫu mô bị sử dụng hoàn toàn trong quá trình xét nghiệm, khiến bệnh nhân không còn cơ hội thực hiện thêm các xét nghiệm khác hoặc tham gia thử nghiệm lâm sàng.
 
----
+Ngoài ra, hệ thống còn gặp nhiều thách thức về kỹ thuật:
 
-## Hướng dẫn kiến trúc
+* Ảnh sinh thiết có độ phân giải rất lớn, có thể lên tới **8 GB** mỗi ảnh.
+* Mỗi ảnh phải được chia thành hàng chục nghìn **image patch** để mô hình AI xử lý.
+* Hệ thống phải đáp ứng các yêu cầu bảo mật và tuân thủ dữ liệu y tế như **HIPAA** tại nhiều quốc gia.
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+## Giải pháp: Kiến trúc AI Inference kết hợp Amazon ECS và Amazon EKS
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+Để giải quyết các vấn đề trên, Artera xây dựng kiến trúc AI trên AWS với nhiều dịch vụ phối hợp:
 
-**Kiến trúc giải pháp bây giờ như sau:**
+* **AWS Global Accelerator** và **Application Load Balancer** tiếp nhận lưu lượng truy cập từ cổng thông tin dành cho bác sĩ và định tuyến vào VPC.
+* **Amazon ECS** vận hành web portal phục vụ người dùng.
+* **Amazon EKS** đảm nhận toàn bộ workload AI/ML inference để phân tích ảnh sinh thiết bằng mô hình Computer Vision.
+* **Amazon EFS** lưu trữ file dùng chung để cả ECS và EKS cùng truy cập trong quá trình xử lý dữ liệu.
+* **Amazon RDS** lưu trữ dữ liệu bệnh nhân và kết quả chẩn đoán.
+* **Amazon ElastiCache** giảm độ trễ khi truy cập các dữ liệu được sử dụng thường xuyên.
+* **Amazon S3** lưu trữ ảnh sinh thiết gốc và kết quả phân tích.
+* **AWS IAM** quản lý quyền truy cập người dùng và dịch vụ.
+* **AWS KMS** quản lý khóa mã hóa nhằm bảo vệ dữ liệu.
+* **Amazon CloudWatch** giám sát toàn bộ hạ tầng và các dịch vụ đang hoạt động.
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Một điểm nổi bật của kiến trúc là khả năng giải quyết bài toán **Data Locality**. Nhờ sử dụng **Amazon EFS** trong cùng Region với ứng dụng, Artera có thể triển khai tài nguyên theo từng khu vực địa lý, đảm bảo dữ liệu bệnh nhân luôn được lưu trữ đúng phạm vi pháp lý yêu cầu, đồng thời vẫn có thể mở rộng nhanh sang các thị trường mới.
 
----
+## Kết quả đạt được
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+Sau khi triển khai kiến trúc trên AWS, hệ thống đạt được nhiều cải thiện đáng kể:
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+* **Rút ngắn thời gian trả kết quả** từ khoảng **6 tuần xuống còn 1–2 ngày**.
+* **Tăng tốc xử lý ảnh sinh thiết**: hàng chục nghìn image patch cho mỗi lát cắt chỉ mất vài giờ để xử lý thay vì nhiều tuần.
+* **Workflow orchestration** giúp chia nhỏ các ảnh có kích thước lớn và xử lý song song trên các cluster Amazon EKS, tối ưu hiệu năng của toàn hệ thống.
 
----
+## Góc nhìn cá nhân
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+Điều mình ấn tượng nhất là cách Artera cân bằng giữa ba yếu tố quan trọng của một hệ thống AI trong lĩnh vực y tế:
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+* Hiệu năng xử lý khối lượng dữ liệu ảnh khổng lồ.
+* Tuân thủ các quy định lưu trữ dữ liệu theo từng khu vực địa lý.
+* Rút ngắn thời gian trả kết quả để hỗ trợ bác sĩ đưa ra quyết định điều trị nhanh hơn.
 
----
+Việc kết hợp **Amazon ECS** cho tầng ứng dụng web và **Amazon EKS** cho AI inference là một kiến trúc thực tế rất đáng tham khảo đối với các hệ thống AI xử lý dữ liệu lớn trên nền tảng Cloud.
 
-## The pub/sub hub
+Nếu quan tâm đến kiến trúc AI trong lĩnh vực y tế hoặc các giải pháp xử lý dữ liệu ảnh quy mô lớn trên AWS, đây là một bài viết rất đáng đọc.
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+![Solution Diagram](/fcj-workshop/images/3-BlogsTranslated/Blog3.png)
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Facebook Post (AWS Study Group - Chờ duyệt - Ngày đăng 18/07/2026)
 
----
-
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+[Original Post (AWS Architecture Blog)](https://aws.amazon.com/blogs/architecture/how-artera-enhances-prostate-cancer-diagnostics-using-aws/)

@@ -13,6 +13,10 @@ pre: " <b> 5.2. </b> "
 + Mã nguồn ReviewSentinal và Account ID của tài khoản AWS.
 + Máy local có trình duyệt, cùng Node.js nếu bạn định build frontend trên máy.
 
+**File cần có để làm workshop**
+[Download lambda functions (PY)](01_lambda_functions.py)
+[Download react frontend (PY)](03_react_dashboard.tsx)
+
 #### Trước khi bắt đầu
 
 1. Đăng nhập AWS Console và kiểm tra region đã là `ap-southeast-1`.
