@@ -6,13 +6,11 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-Trong suốt thời gian thực tập tại **[Tên công ty/tổ chức]** từ **[ngày bắt đầu]** đến **[ngày kết thúc]**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
-Tôi đã tham gia **[mô tả ngắn gọn dự án hoặc công việc chính]**, qua đó cải thiện kỹ năng **[liệt kê kỹ năng: lập trình, phân tích, viết báo cáo, giao tiếp…]**.  
+Trong thời gian thực tập tại AWS Study Group từ 13/04/2026 đến 06/07/2026, tôi đã có cơ hội học hỏi, thực hành và vận dụng những kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.
 
-Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.
+Trong suốt chương trình thực tập, tôi đã tham gia vào dự án Review Sentinal, nơi tôi đảm nhận các công việc phù hợp với hoạt động phát triển và vận hành của nhóm. Quá trình này đã giúp tôi tích lũy kinh nghiệm thực tiễn về quy trình làm việc nhóm, phương pháp phát triển phần mềm trên nền tảng điện toán đám mây, cũng như cách phối hợp và triển khai một dự án trong môi trường thực tế.
 
-Để phản ánh một cách khách quan quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
-
+Để có cái nhìn khách quan về quá trình thực tập của bản thân, tôi xin tự đánh giá dựa trên các tiêu chí sau:
 
 | STT | Tiêu chí                            | Mô tả                                                                                            | Tốt | Khá | Trung bình |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | --- | --- | ---------- |
@@ -29,8 +27,8 @@ Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân t
 | 11  | **Đóng góp vào dự án/tổ chức**      | Hiệu quả công việc, sáng kiến cải tiến, ghi nhận từ team                                         | ☐   | ✅   | ☐          |
 | 12  | **Tổng thể**                        | Đánh giá chung về toàn bộ quá trình thực tập                                                     | ☐   | ✅   | ☐          |
 
-### Cần cải thiện
+### Những mặt cần cải thiện
 
-* Nâng cao tính kỹ luật, chấp hành nghiêm chỉnh nội quy của công ty hoặc bất kỳ trong một tổ chức nào
-* Cải thiện trong cách tư duy giải quyết vấn đề
-* Học cách giao tiếp tốt hơn trong giao tiếp hằng ngày và trong công việc, xử lý tình huống
+* Nâng cao kiến thức nền tảng về kỹ thuật và phát triển hệ thống trên nền tảng điện toán đám mây.
+* Cải thiện kỹ năng giải quyết vấn đề, phát hiện và báo cáo các vấn đề phát sinh, cũng như xử lý tình huống một cách hiệu quả.
+* Rèn luyện kỹ năng giao tiếp trong môi trường làm việc chuyên nghiệp.

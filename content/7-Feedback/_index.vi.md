@@ -6,34 +6,30 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-### Đánh giá chung
+## Đánh giá chung
+### 1. Môi trường làm việc
+Môi trường làm việc chuyên nghiệp nhưng vẫn thân thiện và cởi mở. Không gian làm việc gọn gàng, thoải mái, giúp tôi tập trung và làm việc hiệu quả hơn. Tuy nhiên, tôi mong muốn có thêm cơ hội được tham gia làm việc trực tiếp tại văn phòng nhiều hơn.
+### 2. Sự hỗ trợ từ Mentor / Quản lý nhóm
+Các thành viên trong chương trình FCJ luôn sẵn sàng hỗ trợ khi tôi gặp khó khăn, kể cả ngoài giờ làm việc. Tôi đặc biệt đánh giá cao cách hướng dẫn của mentor khi luôn khuyến khích tôi tự tìm hiểu và giải quyết vấn đề trước, thay vì đưa ra đáp án ngay. Điều này giúp tôi rèn luyện tư duy và nâng cao khả năng xử lý vấn đề một cách độc lập.
+### 3. Cơ hội học tập và phát triển kỹ năng
+Trong thời gian thực tập, tôi đã học hỏi và phát triển nhiều kỹ năng mới như làm việc nhóm, giao tiếp chuyên nghiệp trong môi trường doanh nghiệp, cũng như nâng cao kiến thức và kinh nghiệm thực tế trong quá trình tham gia dự án.
 
-**1. Môi trường làm việc**  
-Môi trường làm việc rất thân thiện và cởi mở. Các thành viên trong FCJ luôn sẵn sàng hỗ trợ khi mình gặp khó khăn, kể cả ngoài giờ làm việc. Không gian làm việc gọn gàng, thoải mái, giúp mình tập trung tốt hơn. Tuy nhiên, mình nghĩ có thể bổ sung thêm một số buổi giao lưu hoặc team bonding để mọi người hiểu nhau hơn.
+---
 
-**2. Sự hỗ trợ của mentor / team admin**  
-Mentor hướng dẫn rất chi tiết, giải thích rõ ràng khi mình chưa hiểu và luôn khuyến khích mình đặt câu hỏi. Team admin hỗ trợ các thủ tục, tài liệu và tạo điều kiện để mình làm việc thuận lợi. Mình đánh giá cao việc mentor cho phép mình thử và tự xử lý vấn đề thay vì chỉ đưa đáp án.
+## Câu hỏi bổ sung
+**Điều khiến bạn hài lòng nhất trong quá trình thực tập là gì?**
+Điều khiến tôi hài lòng nhất là được làm việc trong một môi trường chuyên nghiệp và luôn sẵn sàng hỗ trợ lẫn nhau. Các thành viên trong nhóm thường xuyên trao đổi, giúp đỡ nhau thông qua nhóm chat, tạo nên một môi trường học tập và làm việc tích cực.
+**Theo bạn, công ty nên cải thiện điều gì để nâng cao trải nghiệm cho các thực tập sinh trong tương lai?**
+Hiện tại tôi chưa có góp ý thêm.
+**Nếu có bạn bè quan tâm, bạn có sẵn sàng giới thiệu chương trình thực tập này không? Vì sao?**
+Tôi sẵn sàng giới thiệu. Chương trình thực tập mang lại nhiều kiến thức và kỹ năng cần thiết đối với các lập trình viên trong bối cảnh hiện nay, đồng thời tạo điều kiện để thực tập sinh phát triển kỹ năng thực tế và định hướng nghề nghiệp một cách rõ ràng hơn.
 
-**3. Sự phù hợp giữa công việc và chuyên ngành học**  
-Công việc mình được giao phù hợp với kiến thức mình đã học ở trường, đồng thời mở rộng thêm những mảng mới mà mình chưa từng được tiếp cận. Nhờ vậy, mình vừa củng cố kiến thức nền tảng, vừa học thêm kỹ năng thực tế.
+---
 
-**4. Cơ hội học hỏi & phát triển kỹ năng**  
-Trong quá trình thực tập, mình học được nhiều kỹ năng mới như sử dụng công cụ quản lý dự án, kỹ năng làm việc nhóm, và cả cách giao tiếp chuyên nghiệp trong môi trường công ty. Mentor cũng chia sẻ nhiều kinh nghiệm thực tế giúp mình định hướng tốt hơn cho sự nghiệp.
-
-**5. Văn hóa & tinh thần đồng đội**  
-Văn hóa công ty rất tích cực: mọi người tôn trọng lẫn nhau, làm việc nghiêm túc nhưng vẫn vui vẻ. Khi có dự án gấp, mọi người cùng nhau cố gắng, hỗ trợ không phân biệt vị trí. Điều này giúp mình cảm thấy mình là một phần của tập thể, dù chỉ là thực tập sinh.
-
-**6. Chính sách / phúc lợi cho thực tập sinh**  
-Công ty có hỗ trợ phụ cấp thực tập và tạo điều kiện về thời gian linh hoạt khi cần thiết. Ngoài ra, việc được tham gia các buổi đào tạo nội bộ là một điểm cộng lớn.
-
-
-### Một số câu hỏi khác
-- Điều bạn **hài lòng nhất** trong thời gian thực tập?  
-- Điều bạn nghĩ công ty **cần cải thiện** cho các thực tập sinh sau?  
-- Nếu giới thiệu cho bạn bè, bạn có **khuyên họ thực tập ở đây không**? Vì sao?  
-
-
-### Đề xuất & mong muốn
-- Bạn có đề xuất gì để cải thiện trải nghiệm trong kỳ thực tập?  
-- Bạn có muốn tiếp tục chương trình này trong tương lai?
-- Góp ý khác (tự do chia sẻ):
+## Đề xuất và kỳ vọng
+**Bạn có đề xuất nào để cải thiện chương trình thực tập không?**
+Hiện tại tôi chưa có góp ý thêm.
+**Bạn có mong muốn tiếp tục tham gia chương trình trong tương lai không?**
+Tôi mong muốn có cơ hội tiếp tục đồng hành cùng chương trình trong tương lai.
+**Các ý kiến khác (nếu có):**
+Hiện tại tôi chưa có ý kiến bổ sung.
